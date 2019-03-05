@@ -1,0 +1,46 @@
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
+
+public class MenuScene implements GameScene {
+	
+	protected SceneManager manager;
+	
+	public MenuScene(SceneManager manager) {
+		this.manager = manager;
+	}
+	
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void draw(GraphicsContext context) {
+			context.drawImage(Constants.background , 0, 0);
+			context.drawImage(Constants.play, 156, 429);
+			context.drawImage(Constants.dlvbutton, 156, 546);
+	}
+
+	@Override
+	public void handleEvent(Scene scene) {
+		scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				if(arg0.isPrimaryButtonDown()) {
+					if(arg0.getX() >= 156 && arg0.getX() <= (156+Constants.BUTTON_WIDTH) 
+							&& arg0.getY() >= 429 && arg0.getY() <= (429+Constants.BUTTON_HEIGHT)) {
+						manager.switchToPlay();
+					} else if (arg0.getX() >= 156 && arg0.getX() <= (156+Constants.BUTTON_WIDTH) 
+							&& arg0.getY() >= 546 && arg0.getY() <= (546+Constants.BUTTON_HEIGHT)) {
+						System.out.println("clicking dlv");
+					}
+				}
+			}
+		});
+	}
+
+}

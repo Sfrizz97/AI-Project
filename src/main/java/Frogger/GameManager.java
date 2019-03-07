@@ -1,15 +1,12 @@
 package Frogger;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 
 public class GameManager {
 	
 	private SceneManager manager;
-	protected GraphicsContext context;
 	
-	public GameManager(GraphicsContext context) {
+	public GameManager() {
 		manager = new SceneManager();
-		this.context = context;
 	}
 	
 	public void runGame(Scene scene) {
@@ -23,7 +20,7 @@ public class GameManager {
 	}
 	
 	private void draw() {
-		manager.draw(this.context);
+		manager.draw(Constants.context);
 	}
 	
 	private void handleEvent(Scene scene) {

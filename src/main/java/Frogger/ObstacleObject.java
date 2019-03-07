@@ -1,5 +1,4 @@
 package Frogger;
-import javafx.scene.canvas.GraphicsContext;
 
 public class ObstacleObject extends GameObject {
 	
@@ -11,10 +10,18 @@ public class ObstacleObject extends GameObject {
 		this.direction = direction;
 		this.size = size;
 	}
-	@Override
-	public void draw(GraphicsContext context) {
-		// TODO Auto-generated method stub
 
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
+
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

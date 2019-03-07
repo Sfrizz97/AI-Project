@@ -1,34 +1,34 @@
 package Frogger;
-import javafx.scene.canvas.GraphicsContext;
 
 public abstract class GameObject {
 	
 	private int row; //posizione colonna
 	private int column; //posizione riga
-	protected World world = new World();
+	protected World world;
 	
-	public GameObject(int y, int x) {
-		this.row = y;
-		this.column = x;
+	public GameObject(int row, int column) {
+		this.row = row;
+		this.column = column;
+		this.world = new World();
 	}
 	
-	public void setInRow(int y) {
-		if(y >= 0 && y < world.getRow() - 1) {
-			this.row = y;
+	public void setInRow(int row) {
+		if(row >= 0 && row <= world.getRow() - 1) {
+			this.row = row;
 		}
 	}
 	
-	public int getRowElement() {
+	public int getRowIndex() {
 		return this.row;
 	}
 	
-	public void setInColumn(int x) {
-		if(x >= 0 && x < world.getColumn() - 1) {
-			this.column = x;
+	public void setInColumn(int column) {
+		if(column >= 0 && column <= world.getColumn() - 1) {
+			this.column = column;
 		}
 	}
 	
-	public int getColumnElement() {
+	public int getColumnIndex() {
 		return this.column;
 	}
 	
@@ -36,5 +36,7 @@ public abstract class GameObject {
 		return this.world;
 	}
 	
-	public void draw(GraphicsContext context) {}
+	public abstract void update();
+	
+	public abstract void draw();
 }

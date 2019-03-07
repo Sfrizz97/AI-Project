@@ -16,14 +16,15 @@ public class ObstacleManager {
 		cars = new ArrayList<ObstacleObject>();
 		water = new ArrayList<ObstacleObject>();
 		populateObstacles();
+		drawObstacles();
 	}
-	
+
 	public void draw(GraphicsContext context) {
 		for(ObstacleObject oo : cars) {
-			oo.draw(context);
+			oo.draw();
 		}
 		for(ObstacleObject oo : water) {
-			oo.draw(context);
+			oo.draw();
 		}
 	}
 	
@@ -60,5 +61,10 @@ public class ObstacleManager {
 				}
 			}
 		}.start();
+	}
+	
+	private void drawObstacles() {
+		// TODO Auto-generated method stub
+		
 	}
 }

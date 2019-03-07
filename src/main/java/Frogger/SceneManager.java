@@ -15,7 +15,7 @@ public class SceneManager {
 	}
 	
 	public void draw(GraphicsContext context) {
-		scene.draw(context);
+		scene.draw();
 	}
 	
 	public void handleEvent(Scene _scene) {

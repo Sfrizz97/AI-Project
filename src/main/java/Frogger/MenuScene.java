@@ -17,10 +17,10 @@ public class MenuScene implements GameScene {
 		
 	}
 
-	public void draw(GraphicsContext context) {
-			context.drawImage(Constants.background , 0, 0);
-			context.drawImage(Constants.play, 156, 429);
-			context.drawImage(Constants.dlvbutton, 156, 546);
+	public void draw() {
+		Constants.context.drawImage(Constants.background , 0, 0);
+		Constants.context.drawImage(Constants.play, 156, 429);
+		Constants.context.drawImage(Constants.dlvbutton, 156, 546);
 	}
 
 	public void handleEvent(Scene scene) {

@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
 public class MainClass extends Application{
@@ -19,12 +18,12 @@ public class MainClass extends Application{
 		Group root = new Group();
 		final Scene scene = new Scene(root, 700, 700);
 		Canvas canvas = new Canvas(scene.getWidth(),scene.getHeight());
-		GraphicsContext context = canvas.getGraphicsContext2D();
+		Constants.context = canvas.getGraphicsContext2D();
 		root.getChildren().add(canvas);
 		primaryStage.setTitle("Frogger");
 		primaryStage.show();
 		primaryStage.setScene(scene);
-		final GameManager game = new GameManager(context);
+		final GameManager game = new GameManager();
 		
 		new AnimationTimer() {
 

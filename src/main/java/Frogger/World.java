@@ -86,4 +86,15 @@ public class World {
 			return this.stepped;
 		}
 	}
+
+	public void draw() {
+		Constants.context.drawImage(Constants.topinfo, 0, 0);
+		Constants.context.drawImage(Constants.life_text, 0, 0);
+		Constants.context.drawImage(Constants.world, 0, 50);
+		for(Goal g : goals) {
+			if(g.isStepped()) {				
+				Constants.context.drawImage(Constants.flower_goal, 50*g.getGoalColumn(), (50*g.getGoalRow())+50);
+			}
+		}
+	}
 }

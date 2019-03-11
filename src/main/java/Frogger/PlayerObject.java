@@ -6,13 +6,17 @@ public class PlayerObject extends GameObject {
 	
 	private Direction direction;
 	private Image frog;
-	boolean jumping;
+	private boolean jumping;
+	private boolean playing = false;
+	private int n_life;
 	
-	public PlayerObject(int row, int column) {
-		super(row, column);
+	public PlayerObject(int row, int column, World world) {
+		super(row, column, world);
 		this.direction = Direction.IDLE;
 		this.frog = Constants.i_up;
 		this.jumping = false;
+		this.playing = true;
+		this.n_life = 3;
 		Constants.FROG_Y = (50*row)+50;
 		Constants.FROG_X = 50*column;
 		animation();
@@ -27,20 +31,42 @@ public class PlayerObject extends GameObject {
 		}
 	}
 	
+	public boolean checkWin() {
+		for(Goal g: world.getGoals()) {
+			if(!g.isStepped()) {
+				return false;
+			}
+		}
+		this.playing = false;
+		return true;
+	}
+	
 	@Override
 	public void draw() {
-		for(Goal g : world.getGoals()) {
-			if(g.isStepped()) {				
-				Constants.context.drawImage(Constants.flower_goal, 50*g.getGoalColumn(), (50*g.getGoalRow())+50);
-			}
+		for(int i = 0; i < this.n_life ; i++) {
+			Constants.context.drawImage(Constants.life_hearth, 100+i*50, 0);
 		}
 		Constants.context.drawImage(frog, Constants.FROG_X, Constants.FROG_Y);
 	}
 	
 	public void jump(Direction dir) {
 			if(dir == Direction.UP) {
-				if(getRowIndex() - 1 >= 0/* && (getColumnIndex() != 2 && getColumnIndex() != 5 && getColumnIndex() != 8 && getColumnIndex() != 11)*/) {
-					this.jumping = true;
+				if(getRowIndex() - 1 >= 0) {
+					if(getRowIndex() == 1 && (getColumnIndex() != 2 && getColumnIndex() != 5 && getColumnIndex() != 8 && getColumnIndex() != 11)) {
+						this.jumping = false;
+					} 
+					else if (getRowIndex() == 1) {
+						this.jumping = true;
+						for(Goal g : world.getGoals()) {
+							if(g.getGoalColumn() == getColumnIndex() && g.isStepped()) {
+								this.jumping = false;
+							}
+						}
+						
+					} 
+					else {
+						this.jumping = true;
+					}
 				}
 			} else if(dir == Direction.DOWN) {
 				if(getRowIndex() + 1 <= world.getRow() - 1) {
@@ -61,7 +87,7 @@ public class PlayerObject extends GameObject {
 	private synchronized void animation() {
 		new Thread() {
 			public void run() {
-				while(true) {
+				while(playing) {
 					try {
 						Thread.sleep(1);
 						if(jumping) {
@@ -80,7 +106,7 @@ public class PlayerObject extends GameObject {
 										frog = Constants.j_right;
 										Constants.FROG_X++;
 									}
-									Thread.sleep(10);
+									Thread.sleep(6);
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
@@ -113,6 +139,10 @@ public class PlayerObject extends GameObject {
 	
 	public boolean getJumping() {
 		return this.jumping;
+	}
+	
+	public int getNLife() {
+		return this.n_life;
 	}
 	
 	private void updateCoords() {

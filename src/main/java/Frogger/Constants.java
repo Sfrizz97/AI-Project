@@ -20,8 +20,14 @@ public class Constants {
 	public static Image j_right = new Image("images/jumpright.png");
 	public static Image i_right = new Image("images/idleright.png");
 	public static Image flower_goal = new Image("images/lilypad_goal.png");
+	public static Image life_text = new Image("images/life_text.png");
+	public static Image life_hearth = new Image("images/life_hearth.png");
+	public static Image car_lr = new Image("images/car_lr.png");
+	public static Image car_rl = new Image("images/car_rl.png");
 	public static GraphicsContext context;
 	public static int FROG_Y;
 	public static int FROG_X;
+	public static int CAR_Y;
+	public static int CAR_X;
 	
 }

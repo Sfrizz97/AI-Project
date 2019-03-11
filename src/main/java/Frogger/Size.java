@@ -1,5 +1,5 @@
 package Frogger;
 
 public enum Size {
-	SMALL, MEDIUM, LARGE, XLARGE;
+	XSMALL, SMALL, MEDIUM, LARGE, XLARGE;
 }

@@ -1,30 +1,33 @@
 package Frogger;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 
 public class PlayScene implements GameScene {
 	
 	protected SceneManager manager;
+	private World world;
 	private PlayerObject player;
 	private ObstacleManager obManager;
 	
 	public PlayScene(SceneManager sceneManager) {
 		this.manager = sceneManager;
-		this.player = new PlayerObject(12, 7);
-		this.obManager = new ObstacleManager();		
+		this.world = new World();
+		this.player = new PlayerObject(12, 7, this.world);
+		this.obManager = new ObstacleManager(this.world);		
 	}
 
 	public void update() {
 		player.update();
+		if(player.checkWin()) {
+			manager.switchToMenu();
+		}
 	}
 
 	public void draw() {
-		Constants.context.drawImage(Constants.topinfo, 0, 0);
-		Constants.context.drawImage(Constants.world, 0, 50);
+		world.draw();
 		player.draw();
-		//obManager.draw(context);
+		obManager.draw();
 	}
 
 	public void handleEvent(Scene scene) {

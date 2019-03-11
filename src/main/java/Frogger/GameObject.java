@@ -6,10 +6,10 @@ public abstract class GameObject {
 	private int column; //posizione riga
 	protected World world;
 	
-	public GameObject(int row, int column) {
+	public GameObject(int row, int column, World world) {
 		this.row = row;
 		this.column = column;
-		this.world = new World();
+		this.world = world;
 	}
 	
 	public void setInRow(int row) {

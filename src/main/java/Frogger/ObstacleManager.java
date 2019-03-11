@@ -1,8 +1,6 @@
 package Frogger;
 import java.util.ArrayList;
 
-import javafx.scene.canvas.GraphicsContext;
-
 public class ObstacleManager {
 	
 	private ArrayList<ObstacleObject> cars;
@@ -11,15 +9,17 @@ public class ObstacleManager {
 	private final int maxCar = 11;
 	private final int minWater = 1;
 	private final int maxWater = 5;
+	private World world;
 	
-	public ObstacleManager() {
+	public ObstacleManager(World world) {
+		this.world = world;
 		cars = new ArrayList<ObstacleObject>();
 		water = new ArrayList<ObstacleObject>();
 		populateObstacles();
 		drawObstacles();
 	}
 
-	public void draw(GraphicsContext context) {
+	public void draw() {
 		for(ObstacleObject oo : cars) {
 			oo.draw();
 		}
@@ -35,21 +35,21 @@ public class ObstacleManager {
 					int randcars = (int)( Math.random() * (maxCar - minCar + 1)) + minCar;
 					int randwater = (int)( Math.random() * (maxWater - minWater + 1)) + minWater;
 					if(randcars % 2 == 0) {
-						cars.add(new ObstacleObject(randcars, 13, false, Size.SMALL));
+						cars.add(new ObstacleObject(randcars, 13, false, Size.XSMALL, world));
 					} else {
-						cars.add(new ObstacleObject(randcars, 0, true, Size.SMALL));
+						cars.add(new ObstacleObject(randcars, 0, true, Size.XSMALL, world));
 					}
-					if(randwater == 1 ) {
-						water.add(new ObstacleObject(randwater, 0, true, Size.LARGE));
+					/*if(randwater == 1 ) {
+						water.add(new ObstacleObject(0, randwater, true, Size.LARGE, world));
 					} else if(randwater == 2 ) {
-						water.add(new ObstacleObject(randwater, 13, false, Size.MEDIUM));
+						water.add(new ObstacleObject(13, randwater, false, Size.MEDIUM, world));
 					} else if(randwater == 3 ) {
-						water.add(new ObstacleObject(randwater, 0, true, Size.XLARGE));
+						water.add(new ObstacleObject(0, randwater, true, Size.XLARGE, world));
 					} else if(randwater == 4 ) {
-						water.add(new ObstacleObject(randwater, 0, true, Size.SMALL));
+						water.add(new ObstacleObject(0, randwater, true, Size.SMALL, world));
 					} else if(randwater == 5 ) {
-						water.add(new ObstacleObject(randwater, 13, false, Size.LARGE));
-					}
+						water.add(new ObstacleObject(13, randwater, false, Size.LARGE, world));
+					}*/
 					
 					
 					try {

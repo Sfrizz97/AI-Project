@@ -2,8 +2,8 @@ package Frogger;
 
 public abstract class GameObject {
 	
-	private int row; //posizione colonna
-	private int column; //posizione riga
+	protected int row; //posizione colonna
+	protected int column; //posizione riga
 	protected World world;
 	
 	public GameObject(int row, int column, World world) {

@@ -26,8 +26,8 @@ public class PlayScene implements GameScene {
 
 	public void draw() {
 		world.draw();
-		player.draw();
 		obManager.draw();
+		player.draw();
 	}
 
 	public void handleEvent(Scene scene) {

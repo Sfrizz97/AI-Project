@@ -24,6 +24,11 @@ public class Constants {
 	public static Image life_hearth = new Image("images/life_hearth.png");
 	public static Image car_lr = new Image("images/car_lr.png");
 	public static Image car_rl = new Image("images/car_rl.png");
+	public static Image turtle_lr = new Image("images/turtle_lr.png");
+	public static Image turtle_rl = new Image("images/turtle_rl.png");
+	public static Image log_small = new Image("images/log_small.png");
+	public static Image log_medium = new Image("images/log_medium.png");
+	public static Image log_large = new Image("images/log_large.png");
 	public static GraphicsContext context;
 	public static int FROG_Y;
 	public static int FROG_X;

@@ -39,19 +39,17 @@ public class ObstacleManager {
 					} else {
 						cars.add(new ObstacleObject(randcars, 0, true, Size.XSMALL, world));
 					}
-					/*if(randwater == 1 ) {
-						water.add(new ObstacleObject(0, randwater, true, Size.LARGE, world));
+					if(randwater == 1 ) {
+						water.add(new ObstacleObject(randwater, 0, true, Size.MEDIUM, world));
 					} else if(randwater == 2 ) {
-						water.add(new ObstacleObject(13, randwater, false, Size.MEDIUM, world));
+						water.add(new ObstacleObject(randwater, 13, false, Size.SMALL, world));
 					} else if(randwater == 3 ) {
-						water.add(new ObstacleObject(0, randwater, true, Size.XLARGE, world));
+						water.add(new ObstacleObject(randwater, 0, true, Size.LARGE, world));
 					} else if(randwater == 4 ) {
-						water.add(new ObstacleObject(0, randwater, true, Size.SMALL, world));
+						water.add(new ObstacleObject(randwater, 0, true, Size.SMALL, world));
 					} else if(randwater == 5 ) {
-						water.add(new ObstacleObject(13, randwater, false, Size.LARGE, world));
-					}*/
-					
-					
+						water.add(new ObstacleObject(randwater, 13, false, Size.MEDIUM, world));
+					}
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {

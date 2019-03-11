@@ -1,7 +1,6 @@
 package Frogger;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 
 public class MenuScene implements GameScene {

@@ -13,9 +13,7 @@ public abstract class GameObject {
 	}
 	
 	public void setInRow(int row) {
-		if(row >= 0 && row <= world.getRow() - 1) {
 			this.row = row;
-		}
 	}
 	
 	public int getRowIndex() {
@@ -23,9 +21,7 @@ public abstract class GameObject {
 	}
 	
 	public void setInColumn(int column) {
-		if(column >= 0 && column <= world.getColumn() - 1) {
 			this.column = column;
-		}
 	}
 	
 	public int getColumnIndex() {

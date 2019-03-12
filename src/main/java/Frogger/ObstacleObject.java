@@ -18,32 +18,27 @@ public class ObstacleObject extends GameObject {
 		this.g_pos_y = (row*50)+50;
 		if(direction) {
 			if(row >= 7 && row <= 11) {
-				this.g_pos_x = (column*50)-50;
 				this.obstacle = Constants.car_lr;
+				this.g_pos_x = (column*50)-50;
 			} else if(row == 1 || row == 3 || row == 4) {
 				if(this.size == Size.SMALL) {
-					this.obstacle = Constants.log_small;
 					this.g_pos_x = (column*50)-50*2;
+					this.obstacle = Constants.log_small;
 				} else if(this.size == Size.MEDIUM) {
-					this.obstacle = Constants.log_medium;
 					this.g_pos_x = (column*50)-50*3;
+					this.obstacle = Constants.log_medium;
 				} else if(this.size == Size.LARGE) {
-					this.obstacle = Constants.log_large;
 					this.g_pos_x = (column*50)-50*4;
+					this.obstacle = Constants.log_large;
 				}
 			}
 		} else {
 			if(row >= 7 && row <= 11) {
-				this.g_pos_x = (column*50)+50;
 				this.obstacle = Constants.car_rl;
 			} else if(row == 2 || row == 5) {
-				if(this.size == Size.SMALL) {
-					this.g_pos_x = (column*50)-50*2;
-				} else if(this.size == Size.MEDIUM) {
-					this.g_pos_x = (column*50)-50*3;
-				}
 				this.obstacle = Constants.turtle_rl;
 			}
+			this.g_pos_x = (column*50)+50;
 		}
 		animation();
 	}
@@ -53,55 +48,53 @@ public class ObstacleObject extends GameObject {
 			public void run() {
 				int times = 0;
 				switch(size) {
-					case XSMALL:
-						times = 1;
-						break;
-					case SMALL:
-						times = 2;
-						break;
-					case MEDIUM:
-						times = 3;
-						break;
-					case LARGE:
-						times = 4;
-						break;
-					default:
-						break;
+				case XSMALL:
+					times = 1;
+					break;
+				case SMALL:
+					times = 2;
+					break;
+				case MEDIUM:
+					times = 3;
+					break;
+				case LARGE:
+					times = 4;
+					break;
+				default:
+					break;
 				}
 				while(crossing) {
-					for(int i = 0; i < times; i++) {
-						for(int movement = 0; movement < 50; movement++) {
-							try {
-								if(direction) {
-									g_pos_x++;
-								} else {
-									g_pos_x--;
-								}
-								Thread.sleep(20);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-						for(int j = 0; j < times; j++) {
-							
-						}
-						if(direction) {
-							if(getColumnIndex() + 1 >= world.getColumn()) {
-								crossing = false;
+					for(int movement = 0; movement < 50; movement++) {
+						try {
+							if(direction) {
+								g_pos_x++;
 							} else {
-								setInColumn(getColumnIndex()+1);
+								g_pos_x--;
 							}
-						} else {
-							if(getColumnIndex() -1 < 0) {
-								crossing = false;
-							} else {
-								setInColumn(getColumnIndex()-1);
-							}
-						}
-						if(crossing) {
-							updateCoords();
+							Thread.sleep(20);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
 						}
 					}
+					if(direction) {	
+						if(getColumnIndex() - times + 1 >= world.getColumn()) {
+							crossing = false;
+						} else {
+							setInColumn(getColumnIndex() + 1);
+							if(row == 1) {
+								//System.out.println("column is " + getColumnIndex());
+							}
+						}
+					} else {
+						if(getColumnIndex() + times -1 < 0) {
+							crossing = false;
+						} else {
+							setInColumn(getColumnIndex() - 1);
+						}
+					}
+//					if(crossing) {
+//						updateCoords();
+//					}
 				}
 				for(int movement = 0; movement < 50; movement++) {
 					try {
@@ -116,17 +109,16 @@ public class ObstacleObject extends GameObject {
 					}
 				}
 			}
-
-		}.start();
+		}.start();	
 	}
 
-	private void updateCoords() {
-		if(this.direction) {			
-			this.g_pos_x = (getColumnIndex()*50)-50;
-		} else {
-			this.g_pos_x = (getColumnIndex()*50)+50;
-		}
-	}
+//	private void updateCoords() {
+//		if(this.direction) {			
+//			this.g_pos_x = (getColumnIndex()*50)-50;
+//		} else {
+//			this.g_pos_x = (getColumnIndex()*50)+50;
+//		}
+//	}
 
 	@Override
 	public void update() {

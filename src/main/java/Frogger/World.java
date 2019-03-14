@@ -38,7 +38,15 @@ public class World {
 	}
 	
 	public void setElement(GameObject element) {
-		this.world[element.getRowIndex()][element.getColumnIndex()] = element;
+		if(element.getRowIndex() >= 0 && element.getRowIndex() < this.row && element.getColumnIndex() >= 0 && element.getColumnIndex() < this.column) {
+			this.world[element.getRowIndex()][element.getColumnIndex()] = element;
+		}
+	}
+	
+	public void clearCell(int row, int column) {
+		if(column >= 0 && column < this.column) {
+			this.world[row][column] = null;
+		}
 	}
 	
 	public boolean checkPosition(PlayerObject playerObject) {
@@ -57,6 +65,25 @@ public class World {
 		goals.add(g2);
 		goals.add(g3);
 		goals.add(g4);
+	}
+	
+	public void print() {
+		System.out.println("__________________________");
+		for(int i = 0; i < row; i++) {
+			for(int j = 0; j < column; j++) {
+				if(this.world[i][j] instanceof PlayerObject) {
+					System.out.print("F");
+				} else if (this.world[i][j] instanceof ObstacleObject) {
+					System.out.print("O");
+				} else {
+					System.out.print("X");
+				}
+			}
+			System.out.println();
+		}
+		System.out.println("__________________________");
+		System.out.println();
+		System.out.println();
 	}
 	
 	protected class Goal {

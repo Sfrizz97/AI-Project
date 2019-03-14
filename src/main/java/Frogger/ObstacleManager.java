@@ -1,5 +1,6 @@
 package Frogger;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ObstacleManager {
 	
@@ -16,7 +17,6 @@ public class ObstacleManager {
 		cars = new ArrayList<ObstacleObject>();
 		water = new ArrayList<ObstacleObject>();
 		populateObstacles();
-		drawObstacles();
 	}
 
 	public void draw() {
@@ -25,6 +25,25 @@ public class ObstacleManager {
 		}
 		for(ObstacleObject oo : water) {
 			oo.draw();
+		}
+	}
+	
+	public void update() {
+		for(Iterator<ObstacleObject> iterator = cars.iterator(); iterator.hasNext();) {
+			ObstacleObject oo = iterator.next();
+			if(oo.isRemovable()) {
+				iterator.remove();
+			} else {
+				oo.update();
+			}
+		}
+		for(Iterator<ObstacleObject> iterator = water.iterator(); iterator.hasNext();) {
+			ObstacleObject oo = iterator.next();
+			if(oo.isRemovable()) {
+				iterator.remove();
+			} else {
+				oo.update();
+			}
 		}
 	}
 	
@@ -53,16 +72,10 @@ public class ObstacleManager {
 					try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
 		}.start();
-	}
-	
-	private void drawObstacles() {
-		// TODO Auto-generated method stub
-		
 	}
 }

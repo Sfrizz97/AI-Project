@@ -50,37 +50,37 @@ public class PlayerObject extends GameObject {
 	}
 	
 	public void jump(Direction dir) {
-			if(dir == Direction.UP) {
-				if(getRowIndex() - 1 >= 0) {
-					if(getRowIndex() == 1 && (getColumnIndex() != 2 && getColumnIndex() != 5 && getColumnIndex() != 8 && getColumnIndex() != 11)) {
-						this.jumping = false;
-					} 
-					else if (getRowIndex() == 1) {
-						this.jumping = true;
-						for(Goal g : world.getGoals()) {
-							if(g.getGoalColumn() == getColumnIndex() && g.isStepped()) {
-								this.jumping = false;
-							}
+		if(dir == Direction.UP) {
+			if(getRowIndex() - 1 >= 0) {
+				if(getRowIndex() == 1 && (getColumnIndex() != 2 && getColumnIndex() != 5 && getColumnIndex() != 8 && getColumnIndex() != 11)) {
+					this.jumping = false;
+				} 
+				else if (getRowIndex() == 1) {
+					this.jumping = true;
+					for(Goal g : world.getGoals()) {
+						if(g.getGoalColumn() == getColumnIndex() && g.isStepped()) {
+							this.jumping = false;
 						}
-						
-					} 
-					else {
-						this.jumping = true;
 					}
-				}
-			} else if(dir == Direction.DOWN) {
-				if(getRowIndex() + 1 <= world.getRow() - 1) {
-					this.jumping = true;
-				}
-			} else if(dir == Direction.LEFT) {
-				if(getColumnIndex() - 1 >= 0) {
-					this.jumping = true;
-				}
-			} else if(dir == Direction.RIGHT) {
-				if(getColumnIndex() + 1 <= world.getColumn() - 1) {
+					
+				} 
+				else {
 					this.jumping = true;
 				}
 			}
+		} else if(dir == Direction.DOWN) {
+			if(getRowIndex() + 1 <= world.getRow() - 1) {
+				this.jumping = true;
+			}
+		} else if(dir == Direction.LEFT) {
+			if(getColumnIndex() - 1 >= 0) {
+				this.jumping = true;
+			}
+		} else if(dir == Direction.RIGHT) {
+			if(getColumnIndex() + 1 <= world.getColumn() - 1) {
+				this.jumping = true;
+			}
+		}
 		this.direction = dir;
 	}
 	

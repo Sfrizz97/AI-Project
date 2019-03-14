@@ -19,9 +19,11 @@ public class PlayScene implements GameScene {
 
 	public void update() {
 		player.update();
+		obManager.update();
 		if(player.checkWin()) {
 			manager.switchToMenu();
 		}
+		world.print();
 	}
 
 	public void draw() {

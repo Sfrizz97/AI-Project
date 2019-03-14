@@ -4,12 +4,15 @@ import javafx.scene.image.Image;
 
 public class ObstacleObject extends GameObject {
 	
-	private boolean direction; //true for left -> right, false for right -> left
-	private Size size = Size.XSMALL; //per default size : SMALL
-	private boolean crossing = true;
-	private Image obstacle;
-	private int g_pos_y;
-	private int g_pos_x;
+	protected boolean direction; //true for left -> right, false for right -> left
+	protected Size size = Size.XSMALL; //per default size : SMALL
+	protected boolean crossing = true;
+	protected Image obstacle;
+	protected int g_pos_y;
+	protected int g_pos_x;
+	protected int times;
+	protected int sleep_time;
+	protected boolean removable;
 	
 	public ObstacleObject(int row, int column, boolean direction, Size size, World world) {
 		super(row, column, world);
@@ -40,29 +43,38 @@ public class ObstacleObject extends GameObject {
 			}
 			this.g_pos_x = (column*50)+50;
 		}
+		switch(size) {
+			case XSMALL:
+				this.times = 1;
+				this.sleep_time = 20;
+				break;
+			case SMALL:
+				this.times = 2;
+				this.sleep_time = 16;
+				break;
+			case MEDIUM:
+				this.times = 3;
+				this.sleep_time = 12;
+				break;
+			case LARGE:
+				this.times = 4;
+				this.sleep_time = 8;
+				break;
+			default:
+				break;
+		}
+		this.removable = false;
 		animation();
 	}
-
-	private synchronized void animation() {
-		new Thread() {
+	
+	public boolean isRemovable() {
+		return this.removable;
+	}
+	
+	private void animation() {
+		new Thread( new Runnable() {
+			int temp = getColumnIndex();
 			public void run() {
-				int times = 0;
-				switch(size) {
-				case XSMALL:
-					times = 1;
-					break;
-				case SMALL:
-					times = 2;
-					break;
-				case MEDIUM:
-					times = 3;
-					break;
-				case LARGE:
-					times = 4;
-					break;
-				default:
-					break;
-				}
 				while(crossing) {
 					for(int movement = 0; movement < 50; movement++) {
 						try {
@@ -71,7 +83,7 @@ public class ObstacleObject extends GameObject {
 							} else {
 								g_pos_x--;
 							}
-							Thread.sleep(20);
+							Thread.sleep(sleep_time);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -80,22 +92,19 @@ public class ObstacleObject extends GameObject {
 						if(getColumnIndex() - times + 1 >= world.getColumn()) {
 							crossing = false;
 						} else {
-							setInColumn(getColumnIndex() + 1);
-							if(row == 1) {
-								//System.out.println("column is " + getColumnIndex());
-							}
+							temp++;
+							setInColumn(temp);
+							
 						}
 					} else {
-						if(getColumnIndex() + times -1 < 0) {
+						if(getColumnIndex() + times - 1 < 0) {
 							crossing = false;
 						} else {
-							setInColumn(getColumnIndex() - 1);
+							temp--;
+							setInColumn(temp);
 						}
 					}
-//					if(crossing) {
-//						updateCoords();
-//					}
-				}
+				} //end of while
 				for(int movement = 0; movement < 50; movement++) {
 					try {
 						if(direction) {
@@ -103,13 +112,14 @@ public class ObstacleObject extends GameObject {
 						} else {
 							g_pos_x--;
 						}
-						Thread.sleep(20);
+						Thread.sleep(sleep_time);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
+				removable = true;
 			}
-		}.start();	
+		}) {}.start();
 	}
 
 //	private void updateCoords() {
@@ -122,19 +132,26 @@ public class ObstacleObject extends GameObject {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
-		
+		GameObject temp = this;
+		int new_c_index = this.getColumnIndex();
+		for(int i = 0; i < times ; i++) {
+			if(direction) {
+				temp.setInColumn(new_c_index - times + 1 + i);
+			} else {
+				temp.setInColumn(new_c_index + times - 1 - i);
+			}
+			this.world.setElement(temp);
+		}
+		if(direction) {
+			world.clearCell(temp.getRowIndex(), new_c_index - times);
+		} else {
+			world.clearCell(temp.getRowIndex(), new_c_index + times);
+		}
 	}
 
 	@Override
 	public void draw() {
 		if(this.row == 2 || this.row == 5) {
-			int times = 0;
-			if(this.size == Size.SMALL) {
-				times = 2;
-			} else if(this.size == Size.MEDIUM) {
-				times = 3;
-			}
 			for(int i = 0; i < times; i++) {
 				Constants.context.drawImage(obstacle, this.g_pos_x+(50*i), this.g_pos_y);
 			}

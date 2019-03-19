@@ -20,10 +20,13 @@ public class PlayScene implements GameScene {
 	public void update() {
 		player.update();
 		obManager.update();
-		if(player.checkWin()) {
+		if((player.jumpInWater() && obManager.voidBelow(player.row, player.column)) || obManager.collide(player.row, player.column)) {
+			player.removeLife();
+		}
+		if(player.checkWin() || player.isDead()) {
 			manager.switchToMenu();
 		}
-		world.print();
+		//world.print();
 	}
 
 	public void draw() {

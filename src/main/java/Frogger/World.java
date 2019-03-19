@@ -124,4 +124,15 @@ public class World {
 			}
 		}
 	}
+
+	public void clearPlayer(int row, int column) {
+		if(this.world[row][column] instanceof PlayerObject) {
+			this.world[row][column] = null;
+		}
+		
+	}
+
+	public GameObject getElement(int row, int column) {
+		return this.world[row][column];
+	}
 }

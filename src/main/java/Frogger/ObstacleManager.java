@@ -78,4 +78,44 @@ public class ObstacleManager {
 			}
 		}.start();
 	}
+
+	public boolean voidBelow(int row, int column) {
+		for(Iterator<ObstacleObject> iterator = water.iterator(); iterator.hasNext();) {
+			ObstacleObject oo = iterator.next();
+			if(oo.size == Size.SMALL) {
+				for(int i = 0; i < 2; i++) {
+					if(oo.direction && oo.row == row && oo.column - i == column) {
+						return false;
+					} else if(oo.row == row && oo.column + i == column){
+						return false;
+					}
+				}
+			} else if (oo.size == Size.MEDIUM) {
+				for(int i = 0; i < 3; i++) {
+					if(oo.direction && oo.row == row && oo.column - i == column) {
+						return false;
+					} else if(oo.row == row && oo.column + i == column){
+						return false;
+					}
+				}
+			} else if (oo.size == Size.LARGE) {
+				for(int i = 0; i < 4; i++) {
+					if(oo.row == row && oo.column - i == column) {
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	public boolean collide(int row, int column) {
+		for(Iterator<ObstacleObject> iterator = cars.iterator(); iterator.hasNext();) {
+			ObstacleObject oo = iterator.next();
+			if(oo.row == row && oo.column == column) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -135,4 +135,32 @@ public class World {
 	public GameObject getElement(int row, int column) {
 		return this.world[row][column];
 	}
+
+	public boolean turtleSpawnable(int row, Size size) {
+		if(size == size.SMALL) {
+			
+		} else if(size == size.MEDIUM) {
+			
+		}
+		return true;
+	}
+
+	public boolean logSpawnable(int row, Size size) {
+		if(size == size.SMALL) {
+			
+		} else if(size == size.MEDIUM) {
+			
+		} else if(size == size.LARGE) {
+			
+		}
+		return true;
+	}
+
+	public boolean carSpawnable(int row, boolean dir) {
+		if(dir) {
+			return true;
+		} else {
+			return true;
+		}
+	}
 }

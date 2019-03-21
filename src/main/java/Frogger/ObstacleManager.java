@@ -51,7 +51,7 @@ public class ObstacleManager {
 		new Thread() {
 			public void run() {
 				while(true) {
-					int randcars = (int)( Math.random() * (maxCar - minCar + 1)) + minCar;
+					/*int randcars = (int)( Math.random() * (maxCar - minCar + 1)) + minCar;
 					int randwater = (int)( Math.random() * (maxWater - minWater + 1)) + minWater;
 					if(randcars % 2 == 0) {
 						cars.add(new ObstacleObject(randcars, 13, false, Size.XSMALL, world));
@@ -73,6 +73,49 @@ public class ObstacleManager {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
+					}*/
+					for(int i = 0; i < world.getRow()-1; i++) {
+						if(i != 0 && i != 6) {
+							for(int j = 0; j < world.getColumn(); j++) {
+								if(i >= 1 && i <= 5) {
+									if(i == 2 || i == 5) {
+										if(i == 2) {
+											if(world.turtleSpawnable(i, Size.SMALL)) {
+												water.add(new ObstacleObject(i, 13, false, Size.SMALL, world));
+											}
+										} else if(i == 5) {
+											if(world.turtleSpawnable(i, Size.MEDIUM)) {
+												water.add(new ObstacleObject(i, 13, false, Size.MEDIUM, world));
+											}
+										}
+									} else {
+										if(i == 1) {
+											if(world.logSpawnable(i, Size.MEDIUM)) {
+												water.add(new ObstacleObject(i, 0, true, Size.MEDIUM, world));
+											}
+										} else if(i == 3) {
+											if(world.logSpawnable(i, Size.LARGE)) {
+												water.add(new ObstacleObject(i, 0, true, Size.LARGE, world));
+											}
+										} else if(i == 4) {
+											if(world.logSpawnable(i, Size.SMALL)) {
+												water.add(new ObstacleObject(i, 0, true, Size.SMALL, world));
+											}
+										}
+									}
+								} else if (i >= 7 && i <= 11) {
+									if(i % 2 == 0) {
+										if(world.carSpawnable(i, false)) {
+											cars.add(new ObstacleObject(i, 13, false, Size.XSMALL, world));
+										}
+									} else {
+										if(world.carSpawnable(i, true)) {
+											cars.add(new ObstacleObject(i, 0, true, Size.XSMALL, world));
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 			}

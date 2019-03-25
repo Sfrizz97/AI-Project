@@ -29,4 +29,8 @@ public class SceneManager {
 	public void switchToMenu() {
 		this.scene = new MenuScene(this);
 	}
+	
+	public GameScene getGameScene() {
+		return this.scene;
+	}
 }

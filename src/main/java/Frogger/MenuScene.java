@@ -28,10 +28,12 @@ public class MenuScene implements GameScene {
 			public void handle(MouseEvent arg0) {
 				if(arg0.isPrimaryButtonDown()) {
 					if(arg0.getX() >= 156 && arg0.getX() <= (156+Constants.BUTTON_WIDTH) 
-							&& arg0.getY() >= 429 && arg0.getY() <= (429+Constants.BUTTON_HEIGHT)) {
+							&& arg0.getY() >= 429 && arg0.getY() <= (429+Constants.BUTTON_HEIGHT)
+							&& manager.getGameScene() instanceof MenuScene) {
 						manager.switchToPlay();
 					} else if (arg0.getX() >= 156 && arg0.getX() <= (156+Constants.BUTTON_WIDTH) 
-							&& arg0.getY() >= 546 && arg0.getY() <= (546+Constants.BUTTON_HEIGHT)) {
+							&& arg0.getY() >= 546 && arg0.getY() <= (546+Constants.BUTTON_HEIGHT)
+							&& manager.getGameScene() instanceof MenuScene) {
 						System.out.println("clicking dlv");
 					}
 				}

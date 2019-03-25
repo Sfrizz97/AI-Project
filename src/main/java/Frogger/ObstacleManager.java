@@ -6,10 +6,6 @@ public class ObstacleManager {
 	
 	private ArrayList<ObstacleObject> cars;
 	private ArrayList<ObstacleObject> water;
-	private final int minCar = 7;
-	private final int maxCar = 11;
-	private final int minWater = 1;
-	private final int maxWater = 5;
 	private World world;
 	
 	public ObstacleManager(World world) {
@@ -20,27 +16,33 @@ public class ObstacleManager {
 	}
 
 	public void draw() {
-		for(ObstacleObject oo : cars) {
+		Iterator<ObstacleObject> iteratorCar = new ArrayList<ObstacleObject>(cars).iterator();
+		while(iteratorCar.hasNext()) {
+			ObstacleObject oo = iteratorCar.next();
 			oo.draw();
 		}
-		for(ObstacleObject oo : water) {
+		Iterator<ObstacleObject> iteratorWater = new ArrayList<ObstacleObject>(water).iterator();
+		while(iteratorWater.hasNext()) {
+			ObstacleObject oo = iteratorWater.next();
 			oo.draw();
 		}
 	}
 	
 	public void update() {
-		for(Iterator<ObstacleObject> iterator = cars.iterator(); iterator.hasNext();) {
-			ObstacleObject oo = iterator.next();
+		Iterator<ObstacleObject> iteratorCar = new ArrayList<ObstacleObject>(cars).iterator();
+		while(iteratorCar.hasNext()) {
+			ObstacleObject oo = iteratorCar.next();
 			if(oo.isRemovable()) {
-				iterator.remove();
+				iteratorCar.remove();
 			} else {
 				oo.update();
 			}
 		}
-		for(Iterator<ObstacleObject> iterator = water.iterator(); iterator.hasNext();) {
-			ObstacleObject oo = iterator.next();
+		Iterator<ObstacleObject> iteratorWater = new ArrayList<ObstacleObject>(water).iterator();
+		while(iteratorWater.hasNext()) {
+			ObstacleObject oo = iteratorWater.next();
 			if(oo.isRemovable()) {
-				iterator.remove();
+				iteratorWater.remove();
 			} else {
 				oo.update();
 			}
@@ -51,29 +53,6 @@ public class ObstacleManager {
 		new Thread() {
 			public void run() {
 				while(true) {
-					/*int randcars = (int)( Math.random() * (maxCar - minCar + 1)) + minCar;
-					int randwater = (int)( Math.random() * (maxWater - minWater + 1)) + minWater;
-					if(randcars % 2 == 0) {
-						cars.add(new ObstacleObject(randcars, 13, false, Size.XSMALL, world));
-					} else {
-						cars.add(new ObstacleObject(randcars, 0, true, Size.XSMALL, world));
-					}
-					if(randwater == 1 ) {
-						water.add(new ObstacleObject(randwater, 0, true, Size.MEDIUM, world));
-					} else if(randwater == 2 ) {
-						water.add(new ObstacleObject(randwater, 13, false, Size.SMALL, world));
-					} else if(randwater == 3 ) {
-						water.add(new ObstacleObject(randwater, 0, true, Size.LARGE, world));
-					} else if(randwater == 4 ) {
-						water.add(new ObstacleObject(randwater, 0, true, Size.SMALL, world));
-					} else if(randwater == 5 ) {
-						water.add(new ObstacleObject(randwater, 13, false, Size.MEDIUM, world));
-					}
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}*/
 					for(int i = 0; i < world.getRow()-1; i++) {
 						if(i != 0 && i != 6) {
 							for(int j = 0; j < world.getColumn(); j++) {
@@ -116,6 +95,11 @@ public class ObstacleManager {
 								}
 							}
 						}
+					}
+					try {
+						Thread.sleep(10);
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 			}

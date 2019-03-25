@@ -137,30 +137,51 @@ public class World {
 	}
 
 	public boolean turtleSpawnable(int row, Size size) {
-		if(size == size.SMALL) {
-			
-		} else if(size == size.MEDIUM) {
-			
+		for(int i = 0; i < 3; i++) {
+			if(size == Size.SMALL) {
+				if(this.world[row][this.column - 1 - i] instanceof ObstacleObject ) {
+					return false;
+				}
+			} else if(size == Size.MEDIUM && i < 2) {
+				if(this.world[row][this.column - 1 - i] instanceof ObstacleObject ) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}
 
 	public boolean logSpawnable(int row, Size size) {
-		if(size == size.SMALL) {
-			
-		} else if(size == size.MEDIUM) {
-			
-		} else if(size == size.LARGE) {
-			
+		for(int i = 0; i < 4; i++) {
+			if(size == Size.SMALL) {
+				if(this.world[row][i] instanceof ObstacleObject ) {
+					return false;
+				}
+			} else if(size == Size.MEDIUM && i < 3) {
+				if(this.world[row][i] instanceof ObstacleObject ) {
+					return false;
+				}
+			} else if(size == Size.LARGE && i < 2) {
+				if(this.world[row][i] instanceof ObstacleObject ) {
+					return false;
+				}
+			}
 		}
 		return true;
 	}
 
 	public boolean carSpawnable(int row, boolean dir) {
-		if(dir) {
-			return true;
-		} else {
-			return true;
+		for(int i = 0; i < 4; i++) {
+			if(dir) {
+				if(this.world[row][i] instanceof ObstacleObject ) {
+					return false;
+				}
+			} else {
+				if(this.world[row][this.column - 1 - i] instanceof ObstacleObject ) {
+					return false;
+				}
+			}
 		}
+		return true;
 	}
 }

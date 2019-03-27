@@ -25,7 +25,11 @@ public class SceneManager {
 	public void switchToPlay() {
 		this.scene = new PlayScene(this);
 	}
-
+	
+	public void switchToDLV() {
+		this.scene = new DLVScene(this);
+	}
+	
 	public void switchToMenu() {
 		this.scene = new MenuScene(this);
 	}

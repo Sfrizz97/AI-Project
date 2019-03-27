@@ -26,7 +26,7 @@ public class PlayScene implements GameScene {
 		if(player.checkWin() || player.isDead()) {
 			manager.switchToMenu();
 		}
-		world.print();
+		//world.print();
 	}
 
 	public void draw() {

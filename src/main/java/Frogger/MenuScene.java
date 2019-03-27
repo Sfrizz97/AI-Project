@@ -35,6 +35,7 @@ public class MenuScene implements GameScene {
 							&& arg0.getY() >= 546 && arg0.getY() <= (546+Constants.BUTTON_HEIGHT)
 							&& manager.getGameScene() instanceof MenuScene) {
 						System.out.println("clicking dlv");
+						manager.switchToDLV();
 					}
 				}
 			}

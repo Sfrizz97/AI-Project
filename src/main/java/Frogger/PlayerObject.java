@@ -136,7 +136,7 @@ public class PlayerObject extends GameObject {
 										frog = Constants.j_right;
 										Constants.FROG_X++;
 									}
-									Thread.sleep(5);
+									Thread.sleep(1);
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}

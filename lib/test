@@ -1,0 +1,3 @@
+number(1..3).
+
+:-number(X), number(Y), #mod(X,Y,0).

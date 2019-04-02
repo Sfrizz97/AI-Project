@@ -6,8 +6,8 @@ import javafx.scene.input.KeyEvent;
 public class PlayScene implements GameScene {
 	
 	protected SceneManager manager;
-	private World world;
-	private PlayerObject player;
+	protected World world;
+	protected PlayerObject player;
 	private ObstacleManager obManager;
 	
 	public PlayScene(SceneManager sceneManager) {

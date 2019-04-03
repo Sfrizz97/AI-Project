@@ -10,6 +10,8 @@ public class ObstacleFact {
 	@Param(1)
 	private int column;
 	
+	public ObstacleFact() {}
+	
 	public ObstacleFact(int row, int column) {
 		this.row = row;
 		this.column = column;

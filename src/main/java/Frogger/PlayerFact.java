@@ -10,6 +10,8 @@ public class PlayerFact {
 	@Param(1)
 	private int column;
 	
+	public PlayerFact() {}
+	
 	public PlayerFact(int row, int column) {
 		this.row = row;
 		this.column = column;

@@ -102,19 +102,20 @@ public class DLVScene extends PlayScene {
 			for(AnswerSet as: answers.getAnswersets()) {
 				try {
 					for(Object obj: as.getAtoms()) {
-//						if(obj instanceof JumpUp) {
-//							JumpUp ju = (JumpUp) obj;
-//							this.player.jump(ju.getDir());
-//						} else if (obj instanceof JumpDown) {
-//							JumpDown jd = (JumpDown) obj;
-//							this.player.jump(jd.getDir());
-//						} else if (obj instanceof JumpLeft) {
-//							JumpLeft jl = (JumpLeft) obj;
-//							this.player.jump(jl.getDir());
-//						} else if (obj instanceof JumpRight) {
-//							JumpRight jr = (JumpRight) obj;
-//							this.player.jump(jr.getDir());
-//						}
+						System.out.println("ciao");
+						if(obj instanceof JumpUp) {
+							JumpUp ju = (JumpUp) obj;
+							this.player.jump(ju.getDir());
+						} else if (obj instanceof JumpDown) {
+							JumpDown jd = (JumpDown) obj;
+							this.player.jump(jd.getDir());
+						} else if (obj instanceof JumpLeft) {
+							JumpLeft jl = (JumpLeft) obj;
+							this.player.jump(jl.getDir());
+						} else if (obj instanceof JumpRight) {
+							JumpRight jr = (JumpRight) obj;
+							this.player.jump(jr.getDir());
+						}
 					}
 					
 				} catch (Exception e) {

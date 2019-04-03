@@ -10,6 +10,8 @@ public class GoalFact {
 	@Param(1)
 	private int column;
 	
+	public GoalFact() {}
+	
 	public GoalFact(int row, int column) {
 		this.row = row;
 		this.column = column;

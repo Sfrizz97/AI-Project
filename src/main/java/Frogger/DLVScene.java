@@ -96,28 +96,35 @@ public class DLVScene extends PlayScene {
 	@Override
 	public void handleEvent(Scene scene) {
 		if(!this.player.getJumping()) {
-			System.out.println(encoding.getPrograms());
 			this.output = this.handler.startSync();
 			AnswerSets answers = (AnswerSets) output;
 			for(AnswerSet as: answers.getAnswersets()) {
 				try {
+					//System.out.println(as.getAtoms().toString());
 					for(Object obj: as.getAtoms()) {
-						System.out.println("ciao");
 						if(obj instanceof JumpUp) {
-							JumpUp ju = (JumpUp) obj;
-							this.player.jump(ju.getDir());
+							System.out.println("frog should jump up");
+							this.player.jump(Direction.UP);
 						} else if (obj instanceof JumpDown) {
-							JumpDown jd = (JumpDown) obj;
-							this.player.jump(jd.getDir());
+							System.out.println("frog should jump down");
+							this.player.jump(Direction.DOWN);
 						} else if (obj instanceof JumpLeft) {
-							JumpLeft jl = (JumpLeft) obj;
-							this.player.jump(jl.getDir());
+							System.out.println("frog should jump left");
+							this.player.jump(Direction.LEFT);
 						} else if (obj instanceof JumpRight) {
-							JumpRight jr = (JumpRight) obj;
-							this.player.jump(jr.getDir());
+							System.out.println("frog should jump right");
+							this.player.jump(Direction.RIGHT);
 						}
+//						if (obj instanceof GoalFact){
+//							System.out.println("wtf is this a goal?!");
+//						} else if (obj instanceof PlayerFact) {
+//							System.out.println("kitemmuort il giocatore");
+//						} else if (obj instanceof ObstacleFact) {
+//							System.out.println("accir o nemic, strunz");
+//						} else {
+//							System.out.println("che cazzo di istanza è?!");
+//						}
 					}
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

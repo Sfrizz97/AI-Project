@@ -10,8 +10,13 @@ public class JumpUp {
 	@Param(1)
 	private int des_column;
 	
-	private static Direction dir = Direction.UP;
-
+	public JumpUp(int row, int column) {
+		this.des_row = row;
+		this.des_column = column;
+	}
+	
+	public JumpUp() {}
+	
 	public int getDes_row() {
 		return des_row;
 	}
@@ -27,12 +32,8 @@ public class JumpUp {
 	public void setDes_column(int des_column) {
 		this.des_column = des_column;
 	}
-
-	public Direction getDir() {
-		return dir;
-	}
-
-	public static void setDir(Direction dir) {
-		JumpUp.dir = dir;
+	
+	public String toString() {
+		return des_row + " " + des_column + " UP" ;
 	}
 }

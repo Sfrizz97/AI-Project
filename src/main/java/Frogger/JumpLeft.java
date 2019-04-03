@@ -10,8 +10,13 @@ public class JumpLeft {
 	@Param(1)
 	private int des_column;
 	
-	private static Direction dir = Direction.LEFT;
-
+	public JumpLeft(int row, int column) {
+		this.des_row = row;
+		this.des_column = column;
+	}
+	
+	public JumpLeft() {}
+	
 	public int getDes_row() {
 		return des_row;
 	}
@@ -27,12 +32,8 @@ public class JumpLeft {
 	public void setDes_column(int des_column) {
 		this.des_column = des_column;
 	}
-
-	public Direction getDir() {
-		return dir;
-	}
-
-	public static void setDir(Direction dir) {
-		JumpLeft.dir = dir;
+	
+	public String toString() {
+		return des_row + " " + des_column + " LEFT" ;
 	}
 }

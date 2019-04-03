@@ -1,3 +1,80 @@
-number(1..3).
+row(13).
+column(14).
 
-:-number(X), number(Y), #mod(X,Y,0).
+%guess sui salti
+jumpUp(X-1,Y) | jumpDown(X+1,Y) | jumpLeft(X,Y-1) | jumpRight(X,Y+1) :- player(X,Y).
+
+%vincoli bordi
+:-jumpUp(X,_), X < 0.
+:-jumpDown(X,_), row(R), X > R.
+:-jumpLeft(_,Y), Y < 0.
+:-jumpRight(_,Y), column(C), Y > C. 
+
+%vincoli auto
+:-jumpUp(X,Y), obstacle(X,Y), X >= 7, X <= 11.
+:-jumpDown(X,Y), obstacle(X,Y), X >= 7, X <= 11.
+:-jumpLeft(X,Y), obstacle(X,Y), X >= 7, X <= 11.
+:-jumpRight(X,Y), obstacle(X,Y), X >= 7, X <= 11.
+
+%vincoli acqua
+:-jumpUp(X,Y), not obstacle(X,Y), X >= 1, X <= 5.
+:-jumpDown(X,Y), not obstacle(X,Y), X >= 1, X <= 5.
+:-jumpLeft(X,Y), not obstacle(X,Y), X >= 1, X <= 5.
+:-jumpRight(X,Y), not obstacle(X,Y), X >= 1, X <= 5.
+
+%gestire distanza player-bordi???
+
+%distanza player-goal
+%alternativa sulla distanza per i jump
+jump(X,Y) :- jumpUp(X,Y).
+jump(X,Y) :- jumpDown(X,Y).
+jump(X,Y) :- jumpLeft(X,Y).
+jump(X,Y) :- jumpRight(X,Y).
+distanzaPtoG(Z) :- goal(X1,Y1), jump(X2,Y2), Y2>=Y1, Z = (X2-X1)+(Y2-Y1).
+distanzaPtoG(Z) :- goal(X1,Y1), jump(X2,Y2), Y2<Y1, Z = (X2-X1)+(Y1-Y2).
+:~distanzaPtoG(Z). [Z@1,Z]
+
+%fatti da aggiungere tramite embasp
+%goal(0,Y). i goal si trovano tutti sulla riga 0 e colonna Y
+%obstacle(X,Y,Size,Direction), size in int e direction in 0-1.
+%player(X,Y). riga, colonna
+
+player(12,7).
+goal(0,2).
+goal(0,5).
+goal(0,8).
+goal(0,11).
+obstacle(3,0).
+obstacle(3,1).
+obstacle(3,4).
+obstacle(3,5).
+obstacle(3,6).
+obstacle(3,7).
+obstacle(3,10).
+obstacle(3,11).
+obstacle(3,12).
+obstacle(3,13).
+obstacle(4,0).
+obstacle(4,5).
+obstacle(4,6).
+obstacle(5,4).
+obstacle(5,5).
+obstacle(5,6).
+obstacle(5,9).
+obstacle(5,10).
+obstacle(5,11).
+obstacle(7,1).
+obstacle(7,5).
+obstacle(8,8).
+obstacle(8,12).
+obstacle(9,1).
+obstacle(9,5).
+obstacle(10,8).
+obstacle(10,12).
+obstacle(11,1).
+obstacle(11,5).
+obstacle(2,7).
+obstacle(2,8).
+obstacle(1,7).
+obstacle(1,8).
+obstacle(1,9).

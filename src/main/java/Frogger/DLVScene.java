@@ -14,19 +14,19 @@ import javafx.scene.Scene;
 public class DLVScene extends PlayScene {
 	
 	private static String encodingResource="encodings/temp";
-	private static Handler handler;
+	private Handler handler;
 	private InputProgram facts;
 	private InputProgram encoding;
 	private Output output;
 	
 	public DLVScene(SceneManager sceneManager) {
 		super(sceneManager);
-		handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
-		facts = new ASPInputProgram();
+		this.handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
+		this.facts = new ASPInputProgram();
 		
 		for(Goal g: this.world.getGoals()) {
 			try {
-				facts.addObjectInput(new GoalFact(g.getGoalRow(), g.getGoalColumn()));
+				this.facts.addObjectInput(new GoalFact(g.getGoalRow(), g.getGoalColumn()));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -36,13 +36,13 @@ public class DLVScene extends PlayScene {
 			for(int j = 0; j < this.world.getColumn(); j++) {
 				if(this.world.getElement(i, j) instanceof PlayerObject && this.world.getElement(i, j)!=null) {
 					try {
-						facts.addObjectInput(new PlayerFact(i,j));
+						this.facts.addObjectInput(new PlayerFact(i,j));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				} else if(this.world.getElement(i, j) instanceof ObstacleObject && this.world.getElement(i, j)!=null) {
 					try {
-						facts.addObjectInput(new ObstacleFact(i, j));
+						this.facts.addObjectInput(new ObstacleFact(i, j));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -50,20 +50,21 @@ public class DLVScene extends PlayScene {
 			}
 		}
 		
-		handler.addProgram(facts);
-		encoding = new ASPInputProgram();
-		encoding.addFilesPath(encodingResource);
-		handler.addProgram(encoding);
+		this.handler.addProgram(facts);
+		this.encoding = new ASPInputProgram();
+		this.encoding.addFilesPath(encodingResource);
+		this.handler.addProgram(encoding);
 	}
 	
 	@Override
 	public void update() {
 		super.update();
 		//ad ogni ciclo di update vengono aggiornati i fatti
+		this.facts.clearAll();
 		for(Goal g: this.world.getGoals()) {
 			try {
 				if(!g.isStepped()) {					
-					facts.addObjectInput(new GoalFact(g.getGoalRow(), g.getGoalColumn()));
+					this.facts.addObjectInput(new GoalFact(g.getGoalRow(), g.getGoalColumn()));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -74,7 +75,7 @@ public class DLVScene extends PlayScene {
 			for(int j = 0; j < this.world.getColumn(); j++) {
 				if(this.world.getElement(i, j) instanceof PlayerObject && this.world.getElement(i, j)!=null) {
 					try {
-						facts.addObjectInput(new PlayerFact(i,j));
+						this.facts.addObjectInput(new PlayerFact(i,j));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -87,29 +88,33 @@ public class DLVScene extends PlayScene {
 				}
 			}
 		}
+		this.handler.removeAll();
+		this.handler.addProgram(facts);
+		this.handler.addProgram(encoding);
 	}
 	
 	@Override
 	public void handleEvent(Scene scene) {
 		if(!this.player.getJumping()) {
-			this.output = handler.startSync();
+			System.out.println(encoding.getPrograms());
+			this.output = this.handler.startSync();
 			AnswerSets answers = (AnswerSets) output;
 			for(AnswerSet as: answers.getAnswersets()) {
 				try {
 					for(Object obj: as.getAtoms()) {
-						if(obj instanceof JumpUp) {
-							JumpUp ju = (JumpUp) obj;
-							this.player.jump(ju.getDir());
-						} else if (obj instanceof JumpDown) {
-							JumpDown jd = (JumpDown) obj;
-							this.player.jump(jd.getDir());
-						} else if (obj instanceof JumpLeft) {
-							JumpLeft jl = (JumpLeft) obj;
-							this.player.jump(jl.getDir());
-						} else if (obj instanceof JumpRight) {
-							JumpRight jr = (JumpRight) obj;
-							this.player.jump(jr.getDir());
-						}
+//						if(obj instanceof JumpUp) {
+//							JumpUp ju = (JumpUp) obj;
+//							this.player.jump(ju.getDir());
+//						} else if (obj instanceof JumpDown) {
+//							JumpDown jd = (JumpDown) obj;
+//							this.player.jump(jd.getDir());
+//						} else if (obj instanceof JumpLeft) {
+//							JumpLeft jl = (JumpLeft) obj;
+//							this.player.jump(jl.getDir());
+//						} else if (obj instanceof JumpRight) {
+//							JumpRight jr = (JumpRight) obj;
+//							this.player.jump(jr.getDir());
+//						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -11,16 +11,16 @@ jumpUp(X-1,Y) | jumpDown(X+1,Y) | jumpLeft(X,Y-1) | jumpRight(X,Y+1) :- player(X
 :-jumpRight(_,Y), column(C), Y > C. 
 
 %vincoli auto
-:-jumpUp(X,Y), obstacle(X,Y,1,_), X >= 7, X <= 11.
-:-jumpDown(X,Y), obstacle(X,Y,1,_), X >= 7, X <= 11.
-:-jumpLeft(X,Y), obstacle(X,Y,1,_), X >= 7, X <= 11.
-:-jumpRight(X,Y), obstacle(X,Y,1,_), X >= 7, X <= 11.
+:-jumpUp(X,Y), obstacle(X,Y), X >= 7, X <= 11.
+:-jumpDown(X,Y), obstacle(X,Y), X >= 7, X <= 11.
+:-jumpLeft(X,Y), obstacle(X,Y), X >= 7, X <= 11.
+:-jumpRight(X,Y), obstacle(X,Y), X >= 7, X <= 11.
 
 %vincoli acqua
-:-jumpUp(X,Y), not obstacle(X,Y,_,_), X >= 1, X <= 5.
-:-jumpDown(X,Y), not obstacle(X,Y,_,_), X >= 1, X <= 5.
-:-jumpLeft(X,Y), not obstacle(X,Y,_,_), X >= 1, X <= 5.
-:-jumpRight(X,Y), not obstacle(X,Y,_,_), X >= 1, X <= 5.
+:-jumpUp(X,Y), not obstacle(X,Y), X >= 1, X <= 5.
+:-jumpDown(X,Y), not obstacle(X,Y), X >= 1, X <= 5.
+:-jumpLeft(X,Y), not obstacle(X,Y), X >= 1, X <= 5.
+:-jumpRight(X,Y), not obstacle(X,Y), X >= 1, X <= 5.
 
 %gestire distanza player-bordi???
 
@@ -31,7 +31,7 @@ jump(X,Y) :- jumpDown(X,Y).
 jump(X,Y) :- jumpLeft(X,Y).
 jump(X,Y) :- jumpRight(X,Y).
 distanzaPtoG(Z) :- goal(X1,Y1), jump(X2,Y2), Y2>=Y1, Z = (X2-X1)+(Y2-Y1).
-distanzaPtoG(Z) :- goal(X1,Y1), jump(X2,Y2), Y2<Y1, Z = (X2-X1)+(Y2-Y1).
+distanzaPtoG(Z) :- goal(X1,Y1), jump(X2,Y2), Y2<Y1, Z = (X2-X1)+(Y1-Y2).
 :~distanzaPtoG(Z). [Z@1,Z]
 
 %fatti da aggiungere tramite embasp

@@ -116,6 +116,7 @@ public class DLVScene extends PlayScene {
 //							this.player.jump(jr.getDir());
 //						}
 					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

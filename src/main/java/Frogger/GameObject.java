@@ -35,4 +35,12 @@ public abstract class GameObject {
 	public abstract void update();
 	
 	public abstract void draw();
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof GameObject) {
+			return ((GameObject) obj).row == this.row && ((GameObject) obj).column == this.column;
+		}
+		return false;
+	}
 }

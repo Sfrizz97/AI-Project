@@ -14,7 +14,15 @@ public class ObstacleManager {
 		water = new ArrayList<ObstacleObject>();
 		populateObstacles();
 	}
-
+	
+	public ArrayList<ObstacleObject> getCars() {
+		return this.cars;
+	}
+	
+	public ArrayList<ObstacleObject> getWater() {
+		return this.water;
+	}
+	
 	public void draw() {
 		Iterator<ObstacleObject> iteratorCar = new ArrayList<ObstacleObject>(cars).iterator();
 		while(iteratorCar.hasNext()) {
@@ -29,6 +37,7 @@ public class ObstacleManager {
 	}
 	
 	public void update() {
+		
 		Iterator<ObstacleObject> iteratorCar = new ArrayList<ObstacleObject>(cars).iterator();
 		while(iteratorCar.hasNext()) {
 			ObstacleObject oo = iteratorCar.next();

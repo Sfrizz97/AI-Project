@@ -8,7 +8,7 @@ public class PlayScene implements GameScene {
 	protected SceneManager manager;
 	protected World world;
 	protected PlayerObject player;
-	private ObstacleManager obManager;
+	protected ObstacleManager obManager;
 	
 	public PlayScene(SceneManager sceneManager) {
 		this.manager = sceneManager;

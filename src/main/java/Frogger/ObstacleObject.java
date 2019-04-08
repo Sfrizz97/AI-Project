@@ -75,7 +75,15 @@ public class ObstacleObject extends GameObject {
 		new Thread( new Runnable() {
 			int temp = getColumnIndex();
 			public void run() {
-				while(crossing) {
+				while(crossing && !removable) {
+//					int new_temp = temp;
+//					if(direction) {
+//						new_temp++;
+//					} else {
+//						new_temp--;
+//					}
+//					ObstacleObject tempOb = new ObstacleObject(row, new_temp, direction, size, world);
+//					world.setElement(tempOb);
 					for(int movement = 0; movement < 50; movement++) {
 						try {
 							if(direction) {
@@ -104,6 +112,11 @@ public class ObstacleObject extends GameObject {
 							setInColumn(temp);
 						}
 					}
+//					if(getColumnIndex() - times + 1 >= world.getColumn()) {
+//						crossing = false;
+//					} else if(getColumnIndex() + times - 1 < 0) {
+//						crossing = false;
+//					} 
 				} //end of while
 				for(int movement = 0; movement < 50; movement++) {
 					try {
@@ -159,6 +172,9 @@ public class ObstacleObject extends GameObject {
 			Constants.context.drawImage(obstacle, this.g_pos_x, this.g_pos_y);
 		}
 	}
-
-
+	
+	public void forceRemove() {
+		this.removable = true;
+	}
+	
 }

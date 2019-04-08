@@ -7,11 +7,13 @@ public class ObstacleManager {
 	private ArrayList<ObstacleObject> cars;
 	private ArrayList<ObstacleObject> water;
 	private World world;
+	private boolean spawnable;
 	
 	public ObstacleManager(World world) {
 		this.world = world;
-		cars = new ArrayList<ObstacleObject>();
-		water = new ArrayList<ObstacleObject>();
+		this.cars = new ArrayList<ObstacleObject>();
+		this.water = new ArrayList<ObstacleObject>();
+		this.spawnable = true;
 		populateObstacles();
 	}
 	
@@ -61,7 +63,7 @@ public class ObstacleManager {
 	private void populateObstacles() {
 		new Thread() {
 			public void run() {
-				while(true) {
+				while(spawnable) {
 					for(int i = 0; i < world.getRow()-1; i++) {
 						if(i != 0 && i != 6) {
 							for(int j = 0; j < world.getColumn(); j++) {
@@ -153,5 +155,19 @@ public class ObstacleManager {
 			}
 		}
 		return false;
+	}
+
+	public void removeAll() {
+		this.spawnable = false;
+		for(Iterator<ObstacleObject> iterator = cars.iterator(); iterator.hasNext();) {
+			ObstacleObject oo = iterator.next();
+			oo.forceRemove();
+		}
+		for(Iterator<ObstacleObject> iterator = water.iterator(); iterator.hasNext();) {
+			ObstacleObject oo = iterator.next();
+			oo.forceRemove();
+		}
+		cars.clear();
+		water.clear();
 	}
 }

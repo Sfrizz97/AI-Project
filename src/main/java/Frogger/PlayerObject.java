@@ -7,22 +7,24 @@ public class PlayerObject extends GameObject {
 	private Direction direction;
 	private Image frog;
 	private boolean jumping;
-	//private boolean playing = false;
+	private boolean moving;
+	private boolean playing;
 	private int n_life;
-	private PlayerObject old_player;
+	private int sleep_moving = 0;
 	
 	public PlayerObject(int row, int column, World world) {
 		super(row, column, world);
 		this.direction = Direction.IDLE;
 		this.frog = Constants.i_up;
 		this.jumping = false;
-		//this.playing = true;
+		this.moving = false;
+		this.playing = true;
 		this.n_life = 3;
-		this.old_player = null;
 		//this.world.setElement(this);
 		updateGraphicsCoords();
 		//updateLogicCoords();
 		animation();
+		moveOnObstacle();
 	}
 	
 	private void updateGraphicsCoords() {
@@ -92,28 +94,21 @@ public class PlayerObject extends GameObject {
 							this.jumping = false;
 						}
 					}
-					if(jumping) {
-						this.old_player = this;
-					}
 				} 
 				else {
-					this.old_player = this;
 					this.jumping = true;
 				}
 			}
 		} else if(dir == Direction.DOWN) {
 			if(getRowIndex() + 1 <= world.getRow() - 1) {
-				this.old_player = this;
 				this.jumping = true;
 			}
 		} else if(dir == Direction.LEFT) {
 			if(getColumnIndex() - 1 >= 0) {
-				this.old_player = this;
 				this.jumping = true;
 			}
 		} else if(dir == Direction.RIGHT) {
 			if(getColumnIndex() + 1 <= world.getColumn() - 1) {
-				this.old_player = this;
 				this.jumping = true;
 			}
 		}
@@ -123,7 +118,7 @@ public class PlayerObject extends GameObject {
 	private synchronized void animation() {
 		new Thread() {
 			public void run() {
-				while(n_life > 0) {
+				while(playing) {
 					try {
 						Thread.sleep(1);
 						if(jumping) {
@@ -141,6 +136,9 @@ public class PlayerObject extends GameObject {
 									} else if(direction == Direction.RIGHT) {
 										frog = Constants.j_right;
 										Constants.FROG_X++;
+									}
+									if(Constants.FROG_X % 50 == 0 && Constants.FROG_Y % 50 == 0) {
+										break;
 									}
 									Thread.sleep(3);
 								} catch (InterruptedException e) {
@@ -165,18 +163,79 @@ public class PlayerObject extends GameObject {
 								//world.clearPlayer(getRowIndex(), getColumnIndex() - 1);
 							}
 							jumping = false;
+							System.out.println("Player at: " + getRowIndex() + " " + getColumnIndex());
 						}
 						//updateLogicCoords();
 						direction = Direction.IDLE;
 					} catch(Exception e){
 						e.printStackTrace();
 					}
-					
 				}
 			}
 		}.start();
 	}
 	
+	private void moveOnObstacle() {
+		new Thread() {
+			public void run() {
+				while(playing) {
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					while(moving) {
+						if(jumping) {
+							moving = false;
+							break;
+						}
+						switch(row) {
+						case 1 :
+							sleep_moving = 12;
+							Constants.FROG_X++;
+							moveFrog(true);
+							break;
+						case 2:
+							sleep_moving = 16;
+							Constants.FROG_X--;
+							moveFrog(false);
+							break;
+						case 3:
+							sleep_moving = 8;
+							Constants.FROG_X++;
+							moveFrog(true);
+							break;
+						case 4:
+							sleep_moving = 16;
+							Constants.FROG_X++;
+							moveFrog(true);
+							break;
+						case 5:
+							sleep_moving = 12;
+							Constants.FROG_X--;
+							moveFrog(false);
+							break;
+						}
+						try {
+							Thread.sleep(sleep_moving);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}.start();
+	}
+	
+	protected void moveFrog(boolean dir) {
+		if(dir && ((Constants.FROG_X - 1) % 50 == 0)) {
+			this.column += 1;
+		} else if(!dir & (Constants.FROG_X + 1) % 50 == 0) {
+			this.column -= 1;
+		}
+		
+	}
+
 	public boolean getJumping() {
 		return this.jumping;
 	}
@@ -185,17 +244,31 @@ public class PlayerObject extends GameObject {
 		return this.n_life;
 	}
 	
-	private void updateLogicCoords() {
-		this.row = (Constants.FROG_Y-50)/50;
-		System.out.println("row: " + row);
-		this.column = Constants.FROG_X/50;
-		System.out.println("column: " + column);
-	}
+//	private void updateLogicCoords() {
+//		this.row = (Constants.FROG_Y-50)/50;
+//		System.out.println("row: " + row);
+//		this.column = Constants.FROG_X/50;
+//		System.out.println("column: " + column);
+//	}
 
 	public boolean isDead() {
 		if(this.n_life == 0) {
+			this.playing = false;
 			return true;
 		}
 		return false;
 	}
+
+	public void startMoving() {
+		this.moving = true;
+		//moveOnObstacle();
+	}
+
+	public boolean outOfBound() {
+		if(this.column < 0 || this.column >= world.getColumn()) {
+			return true;
+		}
+		return false;
+	}
+
 }

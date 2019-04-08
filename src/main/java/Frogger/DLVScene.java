@@ -189,15 +189,6 @@ public class DLVScene extends PlayScene {
 						} else if (obj instanceof JumpRight) {
 							this.player.jump(Direction.RIGHT);
 						}
-//						if (obj instanceof GoalFact){
-//							System.out.println("wtf is this a goal?!");
-//						} else if (obj instanceof PlayerFact) {
-//							System.out.println("kitemmuort il giocatore");
-//						} else if (obj instanceof ObstacleFact) {
-//							System.out.println("accir o nemic, strunz");
-//						} else {
-//							System.out.println("che cazzo di istanza è?!");
-//						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

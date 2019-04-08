@@ -20,10 +20,17 @@ public class PlayScene implements GameScene {
 	public void update() {
 		player.update();
 		obManager.update();
-		if((player.jumpInWater() && obManager.voidBelow(player.row, player.column)) || obManager.collide(player.row, player.column)) {
+		if(obManager.voidBelow(player.row, player.column) && player.row<6) {
+			System.out.println("fallen at: " + player.row + " " + player.column);
+		}
+		if((player.jumpInWater() && obManager.voidBelow(player.row, player.column)) || obManager.collide(player.row, player.column) || player.outOfBound()) {
 			player.removeLife();
 		}
+		if(!obManager.voidBelow(player.row, player.column)) {
+			player.startMoving();
+		}
 		if(player.checkWin() || player.isDead()) {
+			obManager.removeAll();
 			manager.switchToMenu();
 		}
 		//world.print();

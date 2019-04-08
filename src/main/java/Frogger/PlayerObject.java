@@ -170,6 +170,7 @@ public class PlayerObject extends GameObject {
 					} catch(Exception e){
 						e.printStackTrace();
 					}
+					
 				}
 			}
 		}.start();

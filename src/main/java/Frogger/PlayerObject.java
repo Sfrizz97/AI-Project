@@ -165,6 +165,7 @@ public class PlayerObject extends GameObject {
 							jumping = false;
 							System.out.println("Player at: " + getRowIndex() + " " + getColumnIndex());
 						}
+						
 						//updateLogicCoords();
 						direction = Direction.IDLE;
 					} catch(Exception e){

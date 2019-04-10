@@ -22,16 +22,16 @@ public class ObstacleObject extends GameObject {
 		if(direction) {
 			if(row >= 7 && row <= 11) {
 				this.obstacle = Constants.car_lr;
-				this.g_pos_x = (column*50)-50;
+				this.g_pos_x = (column*50);
 			} else if(row == 1 || row == 3 || row == 4) {
 				if(this.size == Size.SMALL) {
-					this.g_pos_x = (column*50)-50*2;
+					this.g_pos_x = (column*50)-50*1;
 					this.obstacle = Constants.log_small;
 				} else if(this.size == Size.MEDIUM) {
-					this.g_pos_x = (column*50)-50*3;
+					this.g_pos_x = (column*50)-50*2;
 					this.obstacle = Constants.log_medium;
 				} else if(this.size == Size.LARGE) {
-					this.g_pos_x = (column*50)-50*4;
+					this.g_pos_x = (column*50)-50*3;
 					this.obstacle = Constants.log_large;
 				}
 			}
@@ -41,7 +41,7 @@ public class ObstacleObject extends GameObject {
 			} else if(row == 2 || row == 5) {
 				this.obstacle = Constants.turtle_rl;
 			}
-			this.g_pos_x = (column*50)+50;
+			this.g_pos_x = (column*50);
 		}
 		switch(size) {
 			case XSMALL:
@@ -84,23 +84,24 @@ public class ObstacleObject extends GameObject {
 //					}
 //					ObstacleObject tempOb = new ObstacleObject(row, new_temp, direction, size, world);
 //					world.setElement(tempOb);
-					for(int movement = 0; movement < 50; movement++) {
-						try {
-							if(direction) {
-								g_pos_x++;
-							} else {
-								g_pos_x--;
-							}
-							Thread.sleep(sleep_time);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					}
+//					for(int movement = 0; movement < 50; movement++) {
+//						try {
+//							Thread.sleep(sleep_time);
+//							if(direction) {
+//								g_pos_x++;
+//							} else {
+//								g_pos_x--;
+//							}
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+//					}
 					if(direction) {	
 						if(getColumnIndex() - times + 1 >= world.getColumn()) {
 							crossing = false;
 						} else {
 							temp++;
+							g_pos_x += 50;
 							setInColumn(temp);
 							
 						}
@@ -109,8 +110,14 @@ public class ObstacleObject extends GameObject {
 							crossing = false;
 						} else {
 							temp--;
+							g_pos_x -= 50;
 							setInColumn(temp);
 						}
+					}
+					try {
+						Thread.sleep(sleep_time*50);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 //					if(getColumnIndex() - times + 1 >= world.getColumn()) {
 //						crossing = false;
@@ -118,18 +125,20 @@ public class ObstacleObject extends GameObject {
 //						crossing = false;
 //					} 
 				} //end of while
-				for(int movement = 0; movement < 50; movement++) {
+				//for(int movement = 0; movement < 50; movement++) {
 					try {
+						Thread.sleep(sleep_time*50);
 						if(direction) {
-							g_pos_x++;
+							//g_pos_x++;
+							g_pos_x += 50;
 						} else {
-							g_pos_x--;
+							//g_pos_x--;
+							g_pos_x -= 50;
 						}
-						Thread.sleep(sleep_time);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-				}
+				//}
 				removable = true;
 			}
 		}) {}.start();

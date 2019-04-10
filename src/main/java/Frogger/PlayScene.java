@@ -27,13 +27,14 @@ public class PlayScene implements GameScene {
 			player.removeLife();
 		}
 		if(!obManager.voidBelow(player.row, player.column)) {
+			Constants.COLUMN_BELOW = player.column;
 			player.startMoving();
 		}
 		if(player.checkWin() || player.isDead()) {
 			obManager.removeAll();
 			manager.switchToMenu();
 		}
-		//world.print();
+//		world.print();
 	}
 
 	public void draw() {

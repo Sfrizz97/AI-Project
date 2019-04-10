@@ -89,6 +89,7 @@ public class DLVScene extends PlayScene {
 			ASPMapper.getInstance().registerClass(JumpDown.class);
 			ASPMapper.getInstance().registerClass(JumpLeft.class);
 			ASPMapper.getInstance().registerClass(JumpRight.class);
+			ASPMapper.getInstance().registerClass(NoJump.class);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -188,6 +189,9 @@ public class DLVScene extends PlayScene {
 							this.player.jump(Direction.LEFT);
 						} else if (obj instanceof JumpRight) {
 							this.player.jump(Direction.RIGHT);
+						} else if (obj instanceof NoJump) {
+							System.out.println("ci entro");
+							continue;
 						}
 					}
 				} catch (Exception e) {

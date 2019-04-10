@@ -34,5 +34,6 @@ public class Constants {
 	public static int FROG_X;
 	public static int CAR_Y;
 	public static int CAR_X;
+	public static int COLUMN_BELOW;
 	
 }

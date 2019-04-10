@@ -57,9 +57,10 @@ public class PlayerObject extends GameObject {
 	}
 	
 	public void removeLife() {
-		this.n_life -= 1;
+		//this.n_life -= 1;
 		setInRow(world.getRow()-1);
 		setInColumn(world.getColumn()/2);
+		moving = false;
 		updateGraphicsCoords();
 	}
 	
@@ -163,7 +164,6 @@ public class PlayerObject extends GameObject {
 								//world.clearPlayer(getRowIndex(), getColumnIndex() - 1);
 							}
 							jumping = false;
-							System.out.println("Player at: " + getRowIndex() + " " + getColumnIndex());
 						}
 						
 						//updateLogicCoords();
@@ -179,6 +179,7 @@ public class PlayerObject extends GameObject {
 	
 	private void moveOnObstacle() {
 		new Thread() {
+			boolean dir;
 			public void run() {
 				while(playing) {
 					try {
@@ -194,32 +195,33 @@ public class PlayerObject extends GameObject {
 						switch(row) {
 						case 1 :
 							sleep_moving = 12;
+							dir = true;
 							Constants.FROG_X++;
-							moveFrog(true);
 							break;
 						case 2:
 							sleep_moving = 16;
+							dir = false;
 							Constants.FROG_X--;
-							moveFrog(false);
 							break;
 						case 3:
 							sleep_moving = 8;
+							dir = true;
 							Constants.FROG_X++;
-							moveFrog(true);
 							break;
 						case 4:
 							sleep_moving = 16;
+							dir = true;
 							Constants.FROG_X++;
-							moveFrog(true);
 							break;
 						case 5:
 							sleep_moving = 12;
+							dir = false;
 							Constants.FROG_X--;
-							moveFrog(false);
 							break;
 						}
 						try {
 							Thread.sleep(sleep_moving);
+							moveFrog(dir);
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -230,11 +232,21 @@ public class PlayerObject extends GameObject {
 	}
 	
 	protected void moveFrog(boolean dir) {
-		if(dir && ((Constants.FROG_X - 1) % 50 == 0)) {
+		if(dir && ((Constants.FROG_X - 25) % 50 == 0)) {
 			this.column += 1;
-		} else if(!dir & (Constants.FROG_X + 1) % 50 == 0) {
+		} else if(!dir & (Constants.FROG_X + 25) % 50 == 0) {
 			this.column -= 1;
 		}
+//		System.out.println("in this function");
+//		if(moving) {			
+//			if(dir) {
+//				Constants.FROG_X+=50;
+//				this.column += 1;
+//			} else {
+//				Constants.FROG_X-=50;
+//				this.column -= 1;
+//			}
+//		}
 		
 	}
 

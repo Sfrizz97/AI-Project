@@ -9,12 +9,14 @@ public class PlayScene implements GameScene {
 	protected World world;
 	protected PlayerObject player;
 	protected ObstacleManager obManager;
+	private int death_count;
 	
 	public PlayScene(SceneManager sceneManager) {
 		this.manager = sceneManager;
 		this.world = new World();
 		this.player = new PlayerObject(12, 7, this.world);
-		this.obManager = new ObstacleManager(this.world, this.player);		
+		this.obManager = new ObstacleManager(this.world, this.player);
+		this.death_count = 0;
 	}
 
 	public void update() {
@@ -23,8 +25,13 @@ public class PlayScene implements GameScene {
 		if(obManager.voidBelow(player.row, player.column) && player.row<6) {
 			System.out.println("fallen at: " + player.row + " " + player.column);
 		}
+		if(obManager.collide(player.row, player.column)) {
+			System.out.println("investita");
+		}
 		if((player.jumpInWater() && obManager.voidBelow(player.row, player.column)) || obManager.collide(player.row, player.column) || player.outOfBound()) {
 			player.removeLife();
+			this.death_count++;
+			System.out.println("Death count: " + this.death_count);
 		}
 		if(!obManager.voidBelow(player.row, player.column)) {
 			player.startMoving();
@@ -40,6 +47,7 @@ public class PlayScene implements GameScene {
 		world.draw();
 		obManager.draw();
 		player.draw();
+//		Constants.context.getCanvas().drawText("Death: " + death_count, 300, 0);
 	}
 
 	public void handleEvent(Scene scene) {

@@ -117,7 +117,8 @@ public class ObstacleObject extends GameObject {
 			}
 		}
 	}
-
+	
+	@Override
 	public boolean getDirection() {
 		return this.direction;
 	}

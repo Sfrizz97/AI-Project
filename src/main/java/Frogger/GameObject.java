@@ -43,4 +43,6 @@ public abstract class GameObject {
 		}
 		return false;
 	}
+
+	protected abstract boolean getDirection();
 }

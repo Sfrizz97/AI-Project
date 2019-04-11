@@ -38,52 +38,6 @@ public class DLVScene extends PlayScene {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		//Passo i fatti per obstacle manager
-		/*for(ObstacleObject o: obManager.getCars()) {
-			try {
-				this.facts.addObjectInput(new ObstacleFact(o.getRowIndex(),o.getColumnIndex()));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		for(ObstacleObject o: obManager.getWater()) {
-			for(int j = 0; j < o.times; j++) {
-				if(o.direction) {
-					try {
-						this.facts.addObjectInput(new ObstacleFact(o.getRowIndex(),o.getColumnIndex()+j));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				} else {
-					try {
-						this.facts.addObjectInput(new ObstacleFact(o.getRowIndex(),o.getColumnIndex()+j));
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}*/
-		
-//		for(int i = 1; i < this.world.getRow(); i++) {
-//			for(int j = 0; j < this.world.getColumn(); j++) {
-//				if(this.world.getElement(i, j) instanceof PlayerObject && this.world.getElement(i, j)!=null) {
-//					try {
-//						this.facts.addObjectInput(new PlayerFact(i,j));
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				} else if(this.world.getElement(i, j) instanceof ObstacleObject && this.world.getElement(i, j)!=null) {
-//					try {
-//						this.facts.addObjectInput(new ObstacleFact(i, j));
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		}
-		
 		try {
 			ASPMapper.getInstance().registerClass(JumpUp.class);
 			ASPMapper.getInstance().registerClass(JumpDown.class);
@@ -122,43 +76,15 @@ public class DLVScene extends PlayScene {
 			e.printStackTrace();
 		}
 		
-		//Passo i fatti per obstacle manager
-//		Iterator<ObstacleObject> iteratorCar = new ArrayList<ObstacleObject>(obManager.getCars()).iterator();
-//		while(iteratorCar.hasNext()) {
-//			ObstacleObject o = iteratorCar.next();
-//			//System.out.println(o.getRowIndex() + " " + o.getColumnIndex());
-//			try {
-//				this.facts.addObjectInput(new ObstacleFact(o.getRowIndex(),o.getColumnIndex()));
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-		
-//		Iterator<ObstacleObject> iteratorWater = new ArrayList<ObstacleObject>(obManager.getWater()).iterator();
-//		while(iteratorWater.hasNext()) {
-//			ObstacleObject o = iteratorWater.next();
-//			for(int j = 0; j < o.times; j++) {
-//				if(o.direction) {
-//					try {
-//						this.facts.addObjectInput(new ObstacleFact(o.getRowIndex(),(o.getColumnIndex()-j)));
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				} else {
-//					try {
-//						this.facts.addObjectInput(new ObstacleFact(o.getRowIndex(),(o.getColumnIndex()+j)));
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		}
-		
 		for(int i = 1; i < this.world.getRow(); i++) {
 			for(int j = 0; j < this.world.getColumn(); j++) {
 				if(this.world.getElement(i, j) instanceof ObstacleObject && this.world.getElement(i, j)!=null) {
 					try {
-						facts.addObjectInput(new ObstacleFact(i, j));
+						if(this.world.getElement(i,j).getDirection()) {
+							facts.addObjectInput(new ObstacleFact(i,j,0));							
+						} else {
+							facts.addObjectInput(new ObstacleFact(i,j,1));
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -190,7 +116,6 @@ public class DLVScene extends PlayScene {
 						} else if (obj instanceof JumpRight) {
 							this.player.jump(Direction.RIGHT);
 						} else if (obj instanceof NoJump) {
-							System.out.println("ci entro");
 							continue;
 						}
 					}

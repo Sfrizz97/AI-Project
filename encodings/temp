@@ -32,7 +32,8 @@ jump(X,Y) :- jumpLeft(X,Y).
 jump(X,Y) :- jumpRight(X,Y).
 distanzaPtoG(Z) :- goal(X1,Y1), jump(X2,Y2), Y2>=Y1, Z = (X2-X1)+(Y2-Y1).
 distanzaPtoG(Z) :- goal(X1,Y1), jump(X2,Y2), Y2<Y1, Z = (X2-X1)+(Y1-Y2).
-:~#min{Z:distanzaPtoG(Z)}=H. [H@1,H]
+%:~distanzaPtoG(Z). [Z@1,Z]
+:~#min{Z:distanzaPtoG(Z)} = H. [H@1,H]
 
 %fatti da aggiungere tramite embasp
 %goal(0,Y). i goal si trovano tutti sulla riga 0 e colonna Y

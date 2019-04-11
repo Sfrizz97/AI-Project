@@ -11,7 +11,6 @@ public class ObstacleObject extends GameObject {
 	protected int g_pos_y;
 	protected int g_pos_x;
 	protected int times;
-	protected int sleep_time;
 	protected boolean removable;
 	
 	public ObstacleObject(int row, int column, boolean direction, Size size, World world) {
@@ -46,111 +45,25 @@ public class ObstacleObject extends GameObject {
 		switch(size) {
 			case XSMALL:
 				this.times = 1;
-				this.sleep_time = 20;
 				break;
 			case SMALL:
 				this.times = 2;
-				this.sleep_time = 16;
 				break;
 			case MEDIUM:
 				this.times = 3;
-				this.sleep_time = 12;
 				break;
 			case LARGE:
 				this.times = 4;
-				this.sleep_time = 8;
 				break;
 			default:
 				break;
 		}
 		this.removable = false;
-		animation();
 	}
 	
 	public boolean isRemovable() {
 		return this.removable;
 	}
-	
-	private void animation() {
-		new Thread( new Runnable() {
-			int temp = getColumnIndex();
-			public void run() {
-				while(crossing && !removable) {
-//					int new_temp = temp;
-//					if(direction) {
-//						new_temp++;
-//					} else {
-//						new_temp--;
-//					}
-//					ObstacleObject tempOb = new ObstacleObject(row, new_temp, direction, size, world);
-//					world.setElement(tempOb);
-//					for(int movement = 0; movement < 50; movement++) {
-//						try {
-//							Thread.sleep(sleep_time);
-//							if(direction) {
-//								g_pos_x++;
-//							} else {
-//								g_pos_x--;
-//							}
-//						} catch (InterruptedException e) {
-//							e.printStackTrace();
-//						}
-//					}
-					if(direction) {	
-						if(getColumnIndex() - times + 1 >= world.getColumn()) {
-							crossing = false;
-						} else {
-							temp++;
-							g_pos_x += 50;
-							setInColumn(temp);
-							
-						}
-					} else {
-						if(getColumnIndex() + times - 1 < 0) {
-							crossing = false;
-						} else {
-							temp--;
-							g_pos_x -= 50;
-							setInColumn(temp);
-						}
-					}
-					try {
-						Thread.sleep(sleep_time*50);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-//					if(getColumnIndex() - times + 1 >= world.getColumn()) {
-//						crossing = false;
-//					} else if(getColumnIndex() + times - 1 < 0) {
-//						crossing = false;
-//					} 
-				} //end of while
-				//for(int movement = 0; movement < 50; movement++) {
-					try {
-						Thread.sleep(sleep_time*50);
-						if(direction) {
-							//g_pos_x++;
-							g_pos_x += 50;
-						} else {
-							//g_pos_x--;
-							g_pos_x -= 50;
-						}
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				//}
-				removable = true;
-			}
-		}) {}.start();
-	}
-
-//	private void updateCoords() {
-//		if(this.direction) {			
-//			this.g_pos_x = (getColumnIndex()*50)-50;
-//		} else {
-//			this.g_pos_x = (getColumnIndex()*50)+50;
-//		}
-//	}
 
 	@Override
 	public void update() {
@@ -184,6 +97,29 @@ public class ObstacleObject extends GameObject {
 	
 	public void forceRemove() {
 		this.removable = true;
+	}
+	
+	public void shift() {
+		if(direction) {	
+			if(getColumnIndex() - times + 1 >= world.getColumn()) {
+				this.removable = true;
+			} else {
+				setInColumn(getColumnIndex() + 1);
+				g_pos_x += 50;
+				
+			}
+		} else {
+			if(getColumnIndex() + times - 1 < 0) {
+				this.removable = true;
+			} else {
+				setInColumn(getColumnIndex() - 1);
+				g_pos_x -= 50;
+			}
+		}
+	}
+
+	public boolean getDirection() {
+		return this.direction;
 	}
 	
 }

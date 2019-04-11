@@ -7,24 +7,18 @@ public class ObstacleManager {
 	private ArrayList<ObstacleObject> cars;
 	private ArrayList<ObstacleObject> water;
 	private World world;
+	private PlayerObject player;
 	private boolean spawnable;
 	
-	public ObstacleManager(World world) {
+	public ObstacleManager(World world, PlayerObject player) {
 		this.world = world;
+		this.player = player;
 		this.cars = new ArrayList<ObstacleObject>();
 		this.water = new ArrayList<ObstacleObject>();
 		this.spawnable = true;
 		populateObstacles();
 	}
-	
-	public ArrayList<ObstacleObject> getCars() {
-		return this.cars;
-	}
-	
-	public ArrayList<ObstacleObject> getWater() {
-		return this.water;
-	}
-	
+
 	public void draw() {
 		Iterator<ObstacleObject> iteratorCar = new ArrayList<ObstacleObject>(cars).iterator();
 		while(iteratorCar.hasNext()) {
@@ -108,7 +102,18 @@ public class ObstacleManager {
 						}
 					}
 					try {
-						Thread.sleep(20);
+						Thread.sleep(700);
+						for(Iterator<ObstacleObject> iterator = water.iterator(); iterator.hasNext();) {
+							ObstacleObject oo = iterator.next();
+							oo.shift();
+						}
+						for(Iterator<ObstacleObject> iterator = cars.iterator(); iterator.hasNext();) {
+							ObstacleObject oo = iterator.next();
+							oo.shift();
+						}
+						if(player.isMoving()) {
+							player.shift();
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

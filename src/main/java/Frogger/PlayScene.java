@@ -14,7 +14,7 @@ public class PlayScene implements GameScene {
 		this.manager = sceneManager;
 		this.world = new World();
 		this.player = new PlayerObject(12, 7, this.world);
-		this.obManager = new ObstacleManager(this.world);		
+		this.obManager = new ObstacleManager(this.world, this.player);		
 	}
 
 	public void update() {
@@ -27,7 +27,6 @@ public class PlayScene implements GameScene {
 			player.removeLife();
 		}
 		if(!obManager.voidBelow(player.row, player.column)) {
-			Constants.COLUMN_BELOW = player.column;
 			player.startMoving();
 		}
 		if(player.checkWin() || player.isDead()) {

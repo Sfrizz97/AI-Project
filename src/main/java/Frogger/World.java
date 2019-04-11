@@ -137,12 +137,12 @@ public class World {
 	}
 
 	public boolean turtleSpawnable(int row, Size size) {
-		for(int i = 0; i <= 4; i++) {
+		for(int i = 0; i < 3; i++) {
 			if(size == Size.SMALL) {
 				if(this.world[row][this.column - 1 - i] instanceof ObstacleObject ) {
 					return false;
 				}
-			} else if(size == Size.MEDIUM && i <= 3) {
+			} else if(size == Size.MEDIUM && i < 2) {
 				if(this.world[row][this.column - 1 - i] instanceof ObstacleObject ) {
 					return false;
 				}
@@ -152,16 +152,16 @@ public class World {
 	}
 
 	public boolean logSpawnable(int row, Size size) {
-		for(int i = 0; i <= 5; i++) {
+		for(int i = 0; i < 4; i++) {
 			if(size == Size.SMALL) {
 				if(this.world[row][i] instanceof ObstacleObject ) {
 					return false;
 				}
-			} else if(size == Size.MEDIUM && i <= 4) {
+			} else if(size == Size.MEDIUM && i <= 3) {
 				if(this.world[row][i] instanceof ObstacleObject ) {
 					return false;
 				}
-			} else if(size == Size.LARGE && i <= 3) {
+			} else if(size == Size.LARGE && i < 2) {
 				if(this.world[row][i] instanceof ObstacleObject ) {
 					return false;
 				}
@@ -171,7 +171,7 @@ public class World {
 	}
 
 	public boolean carSpawnable(int row, boolean dir) {
-		for(int i = 0; i <= 4; i++) {
+		for(int i = 0; i < 3; i++) {
 			if(dir) {
 				if(this.world[row][i] instanceof ObstacleObject ) {
 					return false;

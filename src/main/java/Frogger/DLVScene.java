@@ -25,6 +25,10 @@ public class DLVScene extends PlayScene {
 		this.handler = new DesktopHandler(new DLV2DesktopService("lib/dlv2"));
 		this.facts = new ASPInputProgram();
 		
+		/*
+		 * Nel costruttore della scena dlv passo come fatto solo
+		 * i goal e il player
+		 */
 		for(Goal g: this.world.getGoals()) {
 			try {
 				this.facts.addObjectInput(new GoalFact(g.getGoalRow(), g.getGoalColumn()));
@@ -59,7 +63,10 @@ public class DLVScene extends PlayScene {
 	public void update() {
 		super.update();
 		//ad ogni ciclo di update vengono aggiornati i fatti
+		//passo come fatti Goal, Player e Ostacoli
 		this.facts.clearAll();
+		
+		//Passo come fatti i goal che non sono stati raggiunti
 		for(Goal g: this.world.getGoals()) {
 			try {
 				if(!g.isStepped()) {					
@@ -70,12 +77,14 @@ public class DLVScene extends PlayScene {
 			}
 		}
 		
+		//Aggiungo il player come fatto
 		try {
 			this.facts.addObjectInput(new PlayerFact(this.player.getRowIndex(),this.player.getColumnIndex()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
+		//Aggiungo un fatto di ostacolo per ogni cella che occupa
 		for(int i = 1; i < this.world.getRow(); i++) {
 			for(int j = 0; j < this.world.getColumn(); j++) {
 				if(this.world.getElement(i, j) instanceof ObstacleObject && this.world.getElement(i, j)!=null) {
@@ -103,7 +112,7 @@ public class DLVScene extends PlayScene {
 			this.output = this.handler.startSync();
 			AnswerSets answers = (AnswerSets) output;
 			for(AnswerSet as: answers.getAnswersets()) {
-				System.out.println(as.toString());
+				//System.out.println(as.toString());
 				try {
 					//System.out.println(as.getAtoms().toString());
 					for(Object obj: as.getAtoms()) {

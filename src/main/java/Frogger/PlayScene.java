@@ -20,6 +20,16 @@ public class PlayScene implements GameScene {
 	}
 
 	public void update() {
+		if((player.checkWin() || player.isDead()) && !player.getJumping()) {
+			if(player.checkWin()) {
+				System.out.println("Vittoria");
+			}
+			if(player.isDead()) {
+				System.out.println("Sconfitta");
+			}
+			obManager.removeAll();
+			manager.switchToMenu();
+		}
 		player.update();
 		obManager.update();
 		if(obManager.voidBelow(player.row, player.column) && player.row<6) {
@@ -35,10 +45,6 @@ public class PlayScene implements GameScene {
 		}
 		if(!obManager.voidBelow(player.row, player.column)) {
 			player.startMoving();
-		}
-		if(player.checkWin() || player.isDead()) {
-			obManager.removeAll();
-			manager.switchToMenu();
 		}
 //		world.print();
 	}

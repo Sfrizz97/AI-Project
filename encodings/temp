@@ -1,3 +1,8 @@
+%fatti da aggiungere tramite embasp
+%goal(0,Y). i goal si trovano tutti sulla riga 0 e colonna Y
+%obstacle(X,Y,Direction), direction in 0(left -> right) oppure 1(right -> left).
+%player(X,Y). riga, colonna
+
 row(13).
 column(14).
 
@@ -25,36 +30,21 @@ jump(X,Y) :- jumpRight(X,Y).
 %vincoli acqua
 :-jump(X,Y), not waterObstacle(X,Y), X >= 1, X <= 5.
 
-%gestire distanza player-bordi???
-
 %distanza player-goal
-%alternativa sulla distanza per i jump
 distanzaJtoG(Z) :- goal(X1,Y1), jump(X2,Y2), Y2>=Y1, Z = (X2-X1)+(Y2-Y1).
 distanzaJtoG(Z) :- goal(X1,Y1), jump(X2,Y2), Y2<Y1, Z = (X2-X1)+(Y1-Y2).
 distanzaPtoG(Z) :- goal(X1,Y1), player(X2,Y2), Y2>=Y1, Z = (X2-X1)+(Y2-Y1).
 distanzaPtoG(Z) :- goal(X1,Y1), player(X2,Y2), Y2<Y1, Z = (X2-X1)+(Y1-Y2).
 :-#sum{D1:distanzaJtoG(D1)}=Z1, #sum{D1:distanzaPtoG(D1)}=Z2, Z1 > Z2.
-%:~#min{Z:distanzaJtoG(Z)} = H. [H@1,H]
-:~distanzaJtoG(Z). [Z@1,Z]
+:~distanzaJtoG(Z). [Z@2,Z]
 
+%distanze dai bordi in acqua
 :~player(X,Y), obstacle(X,Y,0), X >= 1, X <= 5. [Y@1,Y]
 :~player(X,Y), obstacle(X,Y,1), column(C), X >= 1, X <= 5. [C-1-Y@1,Y,C]
 
-%distanzaBtoJ(Z) :- player(X,Y), obstacle(X,Y,0), column(C), Z = (C - 1 - (C - 1 - Y)), X >= 1, X <=5.
-%distanzaBtoJ(Z) :- player(X,Y), obstacle(X,Y,1), column(C), Z = (C - 1 - Y), X >= 1, X <=5.
-%:~distanzaBtoJ(B). [1@B,B]
-:- player(1,Y), not jumpUp(0,Y).
+%Zone proibite al salto
+:-jumpUp(0,Y),not goal(0,Y).
 
 %Distanza player-macchina
-%nearestLtoRob(X,Y) :- jump(X,Y)
-%nearestRtoLob(X,Y) :- jump(X,Y)
 :-jump(X,Y1), obstacle(X,Y2,0), Y1>Y2, Y1-1=Y2, X >= 7, X <= 11.
 :-jump(X,Y1), obstacle(X,Y2,1), Y1<Y2, Y1+1=Y2, X >= 7, X <= 11.
-
-%zone proibite
-:-jumpUp(0,Y1), goal(0,Y2), Y1 = Y2.
-
-%fatti da aggiungere tramite embasp
-%goal(0,Y). i goal si trovano tutti sulla riga 0 e colonna Y
-%obstacle(X,Y,Direction), direction in 0-1.
-%player(X,Y). riga, colonna

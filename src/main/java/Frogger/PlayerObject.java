@@ -111,16 +111,12 @@ public class PlayerObject extends GameObject {
 						Thread.sleep(1);
 						if(jumping) {
 							if(direction == Direction.UP) {
-								frog = Constants.i_up;
 								setInRow(getRowIndex()-1);
 							} else if(direction == Direction.DOWN) {
-								frog = Constants.i_down;
 								setInRow(getRowIndex()+1);
 							} else if(direction == Direction.LEFT) {
-								frog = Constants.i_left;
 								setInColumn(getColumnIndex()-1);
 							} else if(direction == Direction.RIGHT) {
-								frog = Constants.i_right;
 								setInColumn(getColumnIndex()+1);
 							}
 							for(int movement = 0; movement < 50; movement++) {
@@ -145,6 +141,15 @@ public class PlayerObject extends GameObject {
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
+							}
+							if(direction == Direction.UP) {
+								frog = Constants.i_up;
+							} else if(direction == Direction.DOWN) {
+								frog = Constants.i_down;
+							} else if(direction == Direction.LEFT) {
+								frog = Constants.i_left;
+							} else if(direction == Direction.RIGHT) {
+								frog = Constants.i_right;
 							}
 							
 						}
